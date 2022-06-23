@@ -34,4 +34,17 @@
     $query9 = "SELECT id FROM `table_pangkat` WHERE admin = 'proses'";
     $result9 = mysqli_query($con, $query9);
     $pangkat = mysqli_num_rows($result9);
+
+
+    $hitungGaji = "SELECT COUNT(data_pegawai.nip) pegawai, COUNT(riwayat_usul_berkala.id) usulan FROM `data_pegawai`
+    LEFT JOIN riwayat_usul_berkala ON data_pegawai.nip = riwayat_usul_berkala.nip;";
+    $rowGaji = mysqli_fetch_array( mysqli_query($con, $hitungGaji) );
+
+    $hitungPangkat = "SELECT COUNT(data_pegawai.nip) pegawai, COUNT(table_pangkat.id) usulan FROM `data_pegawai`
+    LEFT JOIN table_pangkat ON data_pegawai.nip = table_pangkat.nip;";
+    $rowPangkat = mysqli_fetch_array( mysqli_query($con, $hitungPangkat) );
+
+    $hitungPensiun = "SELECT COUNT(data_pegawai.nip) pegawai, COUNT(table_pensiun.id) usulan FROM `data_pegawai`
+    LEFT JOIN table_pensiun ON data_pegawai.nip = table_pensiun.nip;";
+    $rowPensiun = mysqli_fetch_array( mysqli_query($con, $hitungPensiun) );
 ?>

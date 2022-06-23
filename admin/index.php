@@ -1,7 +1,7 @@
 <?php
 require 'element/header.php';
-
 require 'fungsi/perhitungan.php';
+
 ?>
 
 <!-- [ Main Content ] start -->
@@ -170,13 +170,13 @@ const ctx = document.getElementById('usulan_berkala');
 const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: ['Jumlah Pegawai', 'Riwayat Usulan Berkala'],
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            label: 'Jumlah',
+            data: [<?= $rowGaji['pegawai'] . ',' . $rowGaji['usulan'];?>],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(54, 162, 235, 0.5)',
                 'rgba(255, 206, 86, 0.2)',
                 'rgba(75, 192, 192, 0.2)',
                 'rgba(153, 102, 255, 0.2)',
@@ -207,13 +207,13 @@ const ctx2 = document.getElementById('pangkat');
 const myChart2 = new Chart(ctx2, {
     type: 'bar',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: ['Jumlah Pegawai', 'Usulan Pangkat'],
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            label: 'Jumlah',
+            data: [<?= $rowPangkat['pegawai'] . ',' . $rowPangkat['usulan'];?>],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(54, 162, 235, 0.5)',
                 'rgba(255, 206, 86, 0.2)',
                 'rgba(75, 192, 192, 0.2)',
                 'rgba(153, 102, 255, 0.2)',
@@ -243,13 +243,13 @@ const ctx3 = document.getElementById('pensiun');
 const myChart3 = new Chart(ctx3, {
     type: 'bar',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: ['Jumlah Pegawai', 'Usulan Pensiun'],
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            label: 'Jumlah',
+            data: [<?= $rowPensiun['pegawai'] . ',' . $rowPensiun['usulan'];?>],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(54, 162, 235, 0.5)',
                 'rgba(255, 206, 86, 0.2)',
                 'rgba(75, 192, 192, 0.2)',
                 'rgba(153, 102, 255, 0.2)',
