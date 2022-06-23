@@ -56,6 +56,15 @@ if (in_array($fileExtension, $allowedfileExtensions)) {
 		return;
 	}
 	require '../../../db_con/koneksi.php';
+	
+	$to_email = 'mbie.oby@gmail.com';
+	$to_nama = 'Ayu Dayanti';
+	$to_subject = 'Informasi: Pembuatan Data Pensiun baru';
+	$to_body = 'Hi Admin, kami menginformasikan bahwa ada penginputan data dari SKPD dan harus memberikan approval dari Anda. Segera lihat admin panel untuk melakukan aproval.';
+
+	require '../../../plugins/kirim.php';
+
+
 	$nip = htmlentities(trim( $_POST['nip']));
 	$tmt_terakhir_jabatan = htmlentities(trim( $_POST['tmt_terakhir_jabatan']));
 	$tanggal_pensiun = htmlentities(trim( $_POST['tanggal_pensiun']));

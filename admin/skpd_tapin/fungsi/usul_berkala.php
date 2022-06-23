@@ -55,6 +55,13 @@ if (in_array($fileExtension, $allowedfileExtensions)) {
 		return;
 	}
 	require '../../../db_con/koneksi.php';
+	
+	$to_email = 'mbie.oby@gmail.com';
+	$to_nama = 'Ayu Dayanti';
+	$to_subject = 'Informasi: Pembuatan Data Usul Berkala baru';
+	$to_body = 'Hi Admin, kami menginformasikan bahwa ada penginputan data dari SKPD dan harus memberikan approval dari Anda. Segera lihat admin panel untuk melakukan aproval.';
+
+	require '../../../plugins/kirim.php';
 
 	date_default_timezone_set("Asia/Singapore");
 	$tanggal = date("Y-m-d");

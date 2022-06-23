@@ -57,6 +57,13 @@ if (in_array($fileExtension, $allowedfileExtensions)) {
 	}
 	
 	require '../../../db_con/koneksi.php';
+	
+	$to_email = 'mbie.oby@gmail.com';
+	$to_nama = 'Ayu Dayanti';
+	$to_subject = 'Informasi: Pembuatan Data Pengajuan Pangkat baru';
+	$to_body = 'Hi Admin, kami menginformasikan bahwa ada penginputan data dari SKPD dan harus memberikan approval dari Anda. Segera lihat admin panel untuk melakukan aproval.';
+
+	require '../../../plugins/kirim.php';
 	$nip = htmlentities(trim( $_POST['nip']));
 	$golongan_pangkat_tujuan = strtoupper( htmlentities(trim( $_POST['golongan_pangkat_tujuan'])) );
 
