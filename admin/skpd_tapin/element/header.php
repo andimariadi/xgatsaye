@@ -98,15 +98,6 @@ if($_SESSION['level'] !="skpd"){
 					
 				</ul>
 			</div>
-				<div class="sb-sidenav-footer">
-					<div class="small">Logged in as:</div>
-					<?php
-						$username = $_SESSION['username'];
-						$user = mysqli_query($con,"SELECT * FROM user WHERE username = '$username'");
-						while($row = mysqli_fetch_array($user)) {
-						echo $row['nama'];
-					} ?>
-				</div>
 		</div>
 	</nav>
 	<!-- [ navigation menu ] end -->
