@@ -4,14 +4,109 @@ include 'buat_folder.php';
 if($_SESSION['level'] !="skpd"){
     header("location:../index.php");
 }
-if (isset($_FILES['document']) && $_FILES['document']['error'] === UPLOAD_ERR_OK) {
-	$fileTmpPath = $_FILES['document']['tmp_name'];
-	$fileName = $_FILES['document']['name'];
-	$fileSize = $_FILES['document']['size'];
-	$fileType = $_FILES['document']['type'];
+if (
+	(isset($_FILES['document_form']) && $_FILES['document_form']['error'] === UPLOAD_ERR_OK) ||
+	(isset($_FILES['document_sk_berkala']) && $_FILES['document_sk_berkala']['error'] === UPLOAD_ERR_OK) ||
+	(isset($_FILES['document_sk_pangkat']) && $_FILES['document_sk_pangkat']['error'] === UPLOAD_ERR_OK) ||
+	(isset($_FILES['document_sk_jabatan']) && $_FILES['document_sk_jabatan']['error'] === UPLOAD_ERR_OK)
+) {
+	$fileTmpPath = $_FILES['document_form']['tmp_name'];
+	$fileName = $_FILES['document_form']['name'];
 	$fileNameCmps = explode(".", $fileName);
 	$fileExtension = strtolower(end($fileNameCmps));
-	$newFileName = "usul_berkala_".md5(time() . $fileName) . '.' . $fileExtension;
+	$document_form = "document_form_".md5(time() . $fileName) . '.' . $fileExtension;
+
+	$filePath_document_form = "";
+	$allowedfileExtensions = array('pdf');
+	if (in_array($fileExtension, $allowedfileExtensions)) {
+		$uploadFileDir = buatFolderUpload();
+		$dest_path = $uploadFileDir . $document_form;		
+		move_uploaded_file($fileTmpPath, $dest_path);	
+		$filePath_document_form = filePath("document", $document_form);
+	} else {
+		$_SESSION['msg'] = "Swal.fire({
+			icon: 'error',
+			title: 'Document Form Usul Berkala tidak valid!',
+			showConfirmButton: false,
+			timer: 1500
+		  });";
+		header('location:../data_pegawai.php');
+		return;
+	}
+
+	$fileTmpPath = $_FILES['document_sk_berkala']['tmp_name'];
+	$fileName = $_FILES['document_sk_berkala']['name'];
+	$fileNameCmps = explode(".", $fileName);
+	$fileExtension = strtolower(end($fileNameCmps));
+	$document_sk_berkala = "document_sk_berkala_".md5(time() . $fileName) . '.' . $fileExtension;
+
+	$filePath_document_sk_berkala = "";
+	$allowedfileExtensions = array('pdf');
+	if (in_array($fileExtension, $allowedfileExtensions)) {
+		$uploadFileDir = buatFolderUpload();
+		$dest_path = $uploadFileDir . $document_sk_berkala;		
+		move_uploaded_file($fileTmpPath, $dest_path);	
+		$filePath_document_sk_berkala = filePath("document", $document_sk_berkala);
+	} else {
+		$_SESSION['msg'] = "Swal.fire({
+			icon: 'error',
+			title: 'Document SK Berkala Terakhir tidak valid!',
+			showConfirmButton: false,
+			timer: 1500
+		  });";
+		header('location:../data_pegawai.php');
+		return;
+	}
+
+	
+
+	$fileTmpPath = $_FILES['document_sk_pangkat']['tmp_name'];
+	$fileName = $_FILES['document_sk_pangkat']['name'];
+	$fileNameCmps = explode(".", $fileName);
+	$fileExtension = strtolower(end($fileNameCmps));
+	$document_sk_pangkat = "document_sk_pangkat_".md5(time() . $fileName) . '.' . $fileExtension;
+
+	$filePath_document_sk_pangkat = "";
+	$allowedfileExtensions = array('pdf');
+	if (in_array($fileExtension, $allowedfileExtensions)) {
+		$uploadFileDir = buatFolderUpload();
+		$dest_path = $uploadFileDir . $document_sk_pangkat;		
+		move_uploaded_file($fileTmpPath, $dest_path);	
+		$filePath_document_sk_pangkat = filePath("document", $document_sk_pangkat);
+	} else {
+		$_SESSION['msg'] = "Swal.fire({
+			icon: 'error',
+			title: 'Document SK Pangkat Terakhir tidak valid!',
+			showConfirmButton: false,
+			timer: 1500
+		  });";
+		header('location:../data_pegawai.php');
+		return;
+	}
+
+	$fileTmpPath = $_FILES['document_sk_jabatan']['tmp_name'];
+	$fileName = $_FILES['document_sk_jabatan']['name'];
+	$fileNameCmps = explode(".", $fileName);
+	$fileExtension = strtolower(end($fileNameCmps));
+	$document_sk_jabatan = "document_sk_jabatan_".md5(time() . $fileName) . '.' . $fileExtension;
+
+	$filePath_document_sk_jabatan = "";
+	$allowedfileExtensions = array('pdf');
+	if (in_array($fileExtension, $allowedfileExtensions)) {
+		$uploadFileDir = buatFolderUpload();
+		$dest_path = $uploadFileDir . $document_sk_jabatan;		
+		move_uploaded_file($fileTmpPath, $dest_path);	
+		$filePath_document_sk_jabatan = filePath("document", $document_sk_jabatan);
+	} else {
+		$_SESSION['msg'] = "Swal.fire({
+			icon: 'error',
+			title: 'Document SK Pemangku Jabatan tidak valid!',
+			showConfirmButton: false,
+			timer: 1500
+		  });";
+		header('location:../data_pegawai.php');
+		return;
+	}
 } else {
 	$_SESSION['msg'] = "Swal.fire({
 		icon: 'error',
@@ -23,28 +118,15 @@ if (isset($_FILES['document']) && $_FILES['document']['error'] === UPLOAD_ERR_OK
 	return;
 }
 
-$filePath = "";
-$allowedfileExtensions = array('pdf');
-if (in_array($fileExtension, $allowedfileExtensions)) {
-	$uploadFileDir = buatFolderUpload();
-	$dest_path = $uploadFileDir . $newFileName;
-	
-	move_uploaded_file($fileTmpPath, $dest_path);
 
-	$filePath = filePath("document", $newFileName);
-} else {
-	$_SESSION['msg'] = "Swal.fire({
-		icon: 'error',
-		title: 'Document tidak valid!',
-		showConfirmButton: false,
-		timer: 1500
-	  });";
-	header('location:../data_pegawai.php');
-	return;
-}
 ?>
 <?php
-	if($filePath == "") {
+	if(
+		$filePath_document_form == "" ||
+		$filePath_document_sk_berkala == "" ||
+		$filePath_document_sk_pangkat == "" ||
+		$filePath_document_sk_jabatan == ""
+	) {
 		$_SESSION['msg'] = "Swal.fire({
 			icon: 'error',
 			title: 'Tidak ada document yang diupload!',
@@ -89,7 +171,7 @@ if (in_array($fileExtension, $allowedfileExtensions)) {
 		$result = mysqli_query($con, $sql);
 
 		
-		$sql = "INSERT INTO `berkas_ajuan_usul_berkala` (`nip`,`file_path`) VALUES ('$nip', '$filePath')";
+		$sql = "INSERT INTO `berkas_ajuan_usul_berkala` (`nip`, `file_path_form`, `file_path_sk_berkala`, `file_path_sk_pangkat`, `file_path_sk_jabatan`) VALUES ('$nip', '$filePath_document_form', '$filePath_document_sk_berkala', '$filePath_document_sk_pangkat', '$filePath_document_sk_jabatan')";
 		$result = mysqli_query($con, $sql);
 		
 		if($result){

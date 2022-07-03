@@ -127,7 +127,7 @@ if(isset($_POST['tanggal_selesai'])) {
 															<td><?php echo $row['fc_sk_cpns_pns'] == "true" ? "ADA" : "TIDAK ADA"?></td>
 															<td><?php echo $row['fc_ktp'] == "true" ? "ADA" : "TIDAK ADA"?></td>
 															<td><?php echo $row['foto'] == "true" ? "ADA" : "TIDAK ADA"?></td>
-															<td><a href="<?=$row['file_path']?>">Lihat document</a></td>
+															<td><a href="<?= base_url($row['file_path']);?>">Lihat document</a></td>
 															<td><?php echo $row['admin']?></td>
 														</tr>
                                                         <?php $no++; } ?>   

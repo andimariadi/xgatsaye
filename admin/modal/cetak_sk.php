@@ -12,7 +12,6 @@ if (isset($_POST["nip"])) {
     // Query data gajih
     $kategori = $row['kategori'];
     $masa_jabatan = $row['masa_jabatan'];
-    echo "SELECT * FROM table_gajih WHERE pangkat = '$kategori' AND masa_jabatan = '$masa_jabatan'";
     $query1 = mysqli_query($con, "SELECT * FROM table_gajih WHERE pangkat = '$kategori' AND masa_jabatan = '$masa_jabatan'");
     $row1 = mysqli_fetch_array($query1);
     if ($row1) {
@@ -256,7 +255,7 @@ if (isset($_POST["nip"])) {
                     Close
                 </button>
 
-                <button type="button submit" value="OK" class="btn btn-warning" style="width: 140px; height: 40px">
+                <button type="submit" value="OK" class="btn btn-warning" style="width: 140px; height: 40px">
                     <i class="fa fa-print"></i>
                     Print
                 </button>

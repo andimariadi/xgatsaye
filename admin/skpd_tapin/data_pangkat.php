@@ -1,6 +1,6 @@
 <?php
 require 'element/header.php';
-$query = mysqli_query($con,"SELECT data_pegawai.*, table_pangkat.id, table_pangkat.golongan_pangkat_tujuan, table_pangkat.file_path FROM table_pangkat INNER JOIN data_pegawai ON table_pangkat.nip = data_pegawai.nip WHERE data_pegawai.unit_kerja_induk = '$skpd' ORDER BY created_at DESC");
+$query = mysqli_query($con,"SELECT data_pegawai.*, table_pangkat.id, table_pangkat.golongan_pangkat_tujuan, file_path_sk_kenaikan_pangkat_terakhir, file_path_fc_sk_cpns_pns, file_path_fc_skp, file_path_fc_kp FROM table_pangkat INNER JOIN data_pegawai ON table_pangkat.nip = data_pegawai.nip WHERE data_pegawai.unit_kerja_induk = '$skpd' ORDER BY created_at DESC");
 
 if (isset($_SESSION['pesan'])) {
     echo "<script>".$_SESSION['pesan']."</script>";
@@ -53,7 +53,10 @@ $_SESSION['pesan'] = '';
 															<th class="align-middle" style="background-color: #cecece; width: 1%" >Gol/Pangkat</th>
 															<th class="align-middle" style="background-color: #cecece; width: 18%" >Unit Kerja Induk</th>
 															<th class="align-middle" style="background-color: #cecece; width: 4%" >Golongan Pangkat Tujuan</th>
-															<th class="align-middle" style="background-color: #cecece; width: 4%" >Document</th>
+															<th class="align-middle" style="background-color: #cecece; width: 4%" >Document SK Kenaikan Pangkat Terakhir</th>
+															<th class="align-middle" style="background-color: #cecece; width: 4%" >Document Fotocopy SK CPNS & PNS</th>
+															<th class="align-middle" style="background-color: #cecece; width: 4%" >Document Fotocopy SKP</th>
+															<th class="align-middle" style="background-color: #cecece; width: 4%" >Document Fotocopy Kartu Pegawai<</th>
 															<th class="align-middle" style="background-color: #cecece; width: 18%" >Action</th>
 														</tr>
                                                     </thead>
@@ -69,7 +72,10 @@ $_SESSION['pesan'] = '';
 															<td><?php echo $row['gol_akhir']?></td>
 															<td><?php echo $row['unit_kerja_induk']?></td>
 															<td><?php echo $row['golongan_pangkat_tujuan']?></td>
-															<td><a href="<?=$row['file_path']?>">Lihat document</a></td>
+															<td><a href="<?= base_url($row['file_path_sk_kenaikan_pangkat_terakhir']);?>">Lihat document</a></td>
+															<td><a href="<?= base_url($row['file_path_fc_sk_cpns_pns']);?>">Lihat document</a></td>
+															<td><a href="<?= base_url($row['file_path_fc_skp']);?>">Lihat document</a></td>
+															<td><a href="<?= base_url($row['file_path_fc_kp']);?>">Lihat document</a></td>
 															<td><div class="dropdown">
                                                                 <button class="btn btn-outline-warning btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                     Action
@@ -127,15 +133,50 @@ $_SESSION['pesan'] = '';
                 <input id="id" name="id" type="hidden" />
                 <div class="form-group">
                     <label>Golongan Pangkat Tujuan</label>
-                    <input type="text" name="golongan_pangkat_tujuan" placeholder="Golongan Pangkat Tujuan" class="form-control" />
+                    <select class="form-control" name="golongan_pangkat_tujuan" placeholder="Golongan Pangkat Tujuan">
+                        <option value="I/A">I/a</option>
+                        <option value="I/B">I/b</option>
+                        <option value="I/C">I/c</option>
+                        <option value="II/D">I/d</option>
+                        <option value="II/A">II/a</option>
+                        <option value="II/B">II/b</option>
+                        <option value="II/C">II/c</option>
+                        <option value="II/D">II/d</option>
+                        <option value="III/A">III/a</option>
+                        <option value="III/B">III/b</option>
+                        <option value="III/C">III/c</option>
+                        <option value="III/D">III/d</option>
+                        <option value="IV/A">IV/a</option>
+                        <option value="IV/B">IV/b</option>
+                        <option value="IV/C">IV/c</option>
+                        <option value="IV/D">IV/d</option>
+                    </select>
                 </div>
+                <h3>Dokumen Persyaratan</h3>
+                <hr/>
                 <div class="form-group">
-                    <label>Dokumen Persyaratan</label>
-                    <input type="file" name="document" placeholder="Dokumen Persyaratan" class="form-control" />
+                    <label>SK Kenaikan Pangkat Terakhir</label>
+                    <input type="file" name="document_sk_kenaikan_pangkat_terakhir" placeholder="SK Kenaikan Pangkat Terakhir" class="form-control" />
                     <span class="text-muted">Upload file akan menimpa file sebelumnya.</span>
                 </div>
                 
-                <a href="#" id="file_path">Lihat dokument terupload</a>
+                <div class="form-group">
+                    <label>Fotocopy SK CPNS & PNS</label>
+                    <input type="file" name="document_fc_sk_cpns_pns" placeholder="Fotocopy SK CPNS & PNS" class="form-control" />
+                    <span class="text-muted">Upload file akan menimpa file sebelumnya.</span>
+                </div>
+                
+                <div class="form-group">
+                    <label>Fotocopy SKP</label>
+                    <input type="file" name="document_fc_skp" placeholder="Fotocopy SKP" class="form-control" />
+                    <span class="text-muted">Upload file akan menimpa file sebelumnya.</span>
+                </div>
+                
+                <div class="form-group">
+                    <label>Fotocopy Kartu Pegawai</label>
+                    <input type="file" name="document_fc_kp" placeholder="Fotocopy Kartu Pegawai" class="form-control" />
+                    <span class="text-muted">Upload file akan menimpa file sebelumnya.</span>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -200,8 +241,7 @@ $_SESSION['pesan'] = '';
         var file_path     = button.data('file_path');
         var modal = $(this);
         modal.find('.modal-body input[name=id]').val(id);
-        modal.find('.modal-body input[name=golongan_pangkat_tujuan]').val(golongan_pangkat_tujuan);
-        modal.find('.modal-body #file_path').attr('href', file_path);
+        modal.find('.modal-body select[name=golongan_pangkat_tujuan]').val(golongan_pangkat_tujuan);
     });
 </script>
 

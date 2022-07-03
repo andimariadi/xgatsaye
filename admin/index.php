@@ -2,6 +2,25 @@
 require 'element/header.php';
 require 'fungsi/perhitungan.php';
 
+$tahun = date('Y');
+if(isset($_GET['tahun'])) {
+	$tahun = htmlentities(trim( $_GET['tahun'] ));
+}
+
+
+
+
+$hitungGaji = "SELECT COUNT(data_pegawai.nip) pegawai, COUNT(riwayat_usul_berkala.id) usulan FROM `data_pegawai`
+LEFT JOIN riwayat_usul_berkala ON data_pegawai.nip = riwayat_usul_berkala.nip AND YEAR(riwayat_usul_berkala.tanggal_selesai) = '{$tahun}';";
+$rowGaji = mysqli_fetch_array( mysqli_query($con, $hitungGaji) );
+
+$hitungPangkat = "SELECT COUNT(data_pegawai.nip) pegawai, COUNT(table_pangkat.id) usulan FROM `data_pegawai`
+LEFT JOIN table_pangkat ON data_pegawai.nip = table_pangkat.nip AND YEAR(table_pangkat.created_at) = '{$tahun}';";
+$rowPangkat = mysqli_fetch_array( mysqli_query($con, $hitungPangkat) );
+
+$hitungPensiun = "SELECT COUNT(data_pegawai.nip) pegawai, COUNT(table_pensiun.id) usulan FROM `data_pegawai`
+LEFT JOIN table_pensiun ON data_pegawai.nip = table_pensiun.nip AND YEAR(table_pensiun.tanggal_pensiun) = '{$tahun}';";
+$rowPensiun = mysqli_fetch_array( mysqli_query($con, $hitungPensiun) );
 ?>
 
 <!-- [ Main Content ] start -->
@@ -116,41 +135,62 @@ require 'fungsi/perhitungan.php';
 									</div>
 								</div>
 							</div>	
-							
-							
 						</div>
 
-						<div class="row">
-							<div class="col-md-4">
+						<div class="card">
+							<div class="card-body">
+
+								<form>
+									<div class="row mb-2">
+										<div class="col-md-4">
+											<select class="form-control" name="tahun">
+												<?php for ($i= date('Y'); $i > 2000; $i--) { 
+													$selected = $i == $tahun ? " selected": "";
+													echo '<option value="'.$i.'"'.$selected.'>' .$i .'</option>';
+												}
+												?>
+											</select>
+										</div>
+										<div class="col-md-4">
+											<button type="submit" class="btn btn-primary">Filter</button>
+										</div>
+									</div>
 								
-								<div class="card">
-									<div class="card-header">
-										<h3>Usulan Gaji</h3>
+								</form>
+		
+								<div class="row">
+									<div class="col-md-4">
+										
+										<div class="card">
+											<div class="card-header">
+												<h3>Usulan Gaji</h3>
+											</div>
+											<div class="card-body">
+												<canvas id="usulan_berkala" width="400" height="400"></canvas>
+											</div>
+										</div>
 									</div>
-									<div class="card-body">
-										<canvas id="usulan_berkala" width="400" height="400"></canvas>
+									<div class="col-md-4">
+										
+										<div class="card">
+											<div class="card-header">
+												<h3>Pangkat</h3>
+											</div>
+											<div class="card-body">
+												<canvas id="pangkat" width="400" height="400"></canvas>
+											</div>
+										</div>
 									</div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								
-								<div class="card">
-									<div class="card-header">
-										<h3>Pangkat</h3>
-									</div>
-									<div class="card-body">
-										<canvas id="pangkat" width="400" height="400"></canvas>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								
-								<div class="card">
-									<div class="card-header">
-										<h3>Pensiun</h3>
-									</div>
-									<div class="card-body">
-										<canvas id="pensiun" width="400" height="400"></canvas>
+									<div class="col-md-4">
+										
+										<div class="card">
+											<div class="card-header">
+												<h3>Pensiun</h3>
+											</div>
+											<div class="card-body">
+												<canvas id="pensiun" width="400" height="400"></canvas>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>

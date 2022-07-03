@@ -1,7 +1,7 @@
 <?php
 require 'element/header.php';
 
-$query = mysqli_query($con,"SELECT data_pegawai.*, table_pensiun.id, table_pensiun.`tmt_terakhir_jabatan`, table_pensiun.`tanggal_pensiun`, table_pensiun.`kategori_pensiun`, table_pensiun.file_path FROM table_pensiun INNER JOIN data_pegawai ON table_pensiun.nip = data_pegawai.nip WHERE data_pegawai.unit_kerja_induk = '$skpd' ORDER BY created_at DESC");
+$query = mysqli_query($con,"SELECT data_pegawai.*, table_pensiun.id, table_pensiun.`tmt_terakhir_jabatan`, table_pensiun.`tanggal_pensiun`, table_pensiun.`kategori_pensiun`, `file_path_spp`, `file_path_sk`, `file_path_ktp`, `file_path_foto` FROM table_pensiun INNER JOIN data_pegawai ON table_pensiun.nip = data_pegawai.nip WHERE data_pegawai.unit_kerja_induk = '$skpd' ORDER BY created_at DESC");
 
 if (isset($_SESSION['pesan'])) {
     echo "<script>".$_SESSION['pesan']."</script>";
@@ -56,7 +56,10 @@ $_SESSION['pesan'] = '';
 															<th class="align-middle" style="background-color: #cecece; width: 4%" >TMT Terakhir Jabatan</th>
 															<th class="align-middle" style="background-color: #cecece; width: 4%" >Tanggal Pensiun</th>
 															<th class="align-middle" style="background-color: #cecece; width: 18%" >Kategori Pensiun</th>
-															<th class="align-middle" style="background-color: #cecece; width: 18%" >Document</th>
+															<th class="align-middle" style="background-color: #cecece; width: 18%" >Surat Permohonan Pensiun</th>
+															<th class="align-middle" style="background-color: #cecece; width: 18%" >Fotocopy SK CPNS & PNS</th>
+															<th class="align-middle" style="background-color: #cecece; width: 18%" >Fotocopy KTP</th>
+															<th class="align-middle" style="background-color: #cecece; width: 18%" >Pas Photo 3x4</th>
 															<th class="align-middle" style="background-color: #cecece; width: 18%" >Action</th>
 														</tr>
                                                     </thead>
@@ -74,7 +77,10 @@ $_SESSION['pesan'] = '';
 															<td><?php echo $row['tmt_terakhir_jabatan']?></td>
 															<td><?php echo $row['tanggal_pensiun']?></td>
 															<td><?php echo $row['kategori_pensiun']?></td>
-															<td><a href="<?=$row['file_path']?>">Lihat document</a></td>
+															<td><a href="<?= base_url($row['file_path_spp']);?>">Lihat document</a></td>
+															<td><a href="<?= base_url($row['file_path_sk']);?>">Lihat document</a></td>
+															<td><a href="<?= base_url($row['file_path_ktp']);?>">Lihat document</a></td>
+															<td><a href="<?= base_url($row['file_path_foto']);?>">Lihat document</a></td>
 															<td><div class="dropdown">
                                                                 <button class="btn btn-outline-warning btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                     Action
@@ -138,20 +144,40 @@ $_SESSION['pesan'] = '';
                     <label>Tanggal Pensiun</label>
                     <input type="date" name="tanggal_pensiun" placeholder="Tanggal Pensiun" class="form-control" />
                 </div>
-
                 <div class="form-group">
                     <label>Kategori Pensiun</label>
-                    <textarea name="kategori_pensiun" placeholder="Kategori Pensiun" class="form-control"></textarea>
+                    <select class="form-control" name="kategori_pensiun">
+                        <option>BUP</option>
+                        <option>Pensiun Dini</option>
+                        <option>Janda</option>
+                        <option>Duda</option>
+                    </select>
                 </div>
-                
+                <h3>Dokumen Persyaratan</h3>
+                <hr/>
                 <div class="form-group">
-                    <label>Dokumen Persyaratan</label>
-                    <input type="file" name="document" placeholder="Dokumen Persyaratan" class="form-control" />
+                    <label>Surat Permohonan Pensiun</label>
+                    <input type="file" name="document_spp" placeholder="Surat Permohonan Pensiun" class="form-control" />
                     <span class="text-muted">Upload file akan menimpa file sebelumnya.</span>
                 </div>
                 
-                <a href="#" id="file_path">Lihat dokument terupload</a>
-
+                <div class="form-group">
+                    <label>Fotocopy SK CPNS & PNS</label>
+                    <input type="file" name="document_fc_sk_cpns_pns" placeholder="Fotocopy SK CPNS & PNS" class="form-control" />
+                    <span class="text-muted">Upload file akan menimpa file sebelumnya.</span>
+                </div>
+                
+                <div class="form-group">
+                    <label>Fotocopy KTP</label>
+                    <input type="file" name="document_fc_ktp" placeholder="Fotocopy KTP" class="form-control" />
+                    <span class="text-muted">Upload file akan menimpa file sebelumnya.</span>
+                </div>
+                
+                <div class="form-group">
+                    <label>Pas Photo 3x4</label>
+                    <input type="file" name="document_foto" placeholder="Pas Photo 3x4" class="form-control" />
+                    <span class="text-muted">Upload file akan menimpa file sebelumnya.</span>
+                </div>
 
             </div>
             <div class="modal-footer">
@@ -220,7 +246,7 @@ $_SESSION['pesan'] = '';
         modal.find('.modal-body input[name=id]').val(id);
         modal.find('.modal-body input[name=tmt_terakhir_jabatan]').val(tmt_terakhir_jabatan);
         modal.find('.modal-body input[name=tanggal_pensiun]').val(tanggal_pensiun);
-        modal.find('.modal-body textarea[name=kategori_pensiun]').val(kategori_pensiun);
+        modal.find('.modal-body select[name=kategori_pensiun]').val(kategori_pensiun);
     });
 </script>
 

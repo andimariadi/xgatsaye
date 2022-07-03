@@ -13,28 +13,37 @@ $username = str_replace("'","/'",$username);
 $password = str_replace("'","/'",$password);
 
 // Query Admin
-$login = mysqli_query($con,"SELECT * FROM verifikator_berkala WHERE username='$username' AND password='$password'");
-$cek = mysqli_num_rows($login);
+$login = mysqli_query($con,"SELECT * FROM verifikator_berkala WHERE username='$username'");
 
-if($cek > 0){
+if(mysqli_num_rows($login) > 0){
 
 	$data = mysqli_fetch_assoc($login);
+	if(password_verify($password, $data['password'])) {
+		if($data['level']=="admin"){
+	
+			$_SESSION['username'] = $username;
+			$_SESSION['level'] = "admin";
+			header("location:../admin/index.php");
+	
+		// Login SKPD
+		} else if($data['level']=="pimpinan"){
+			$_SESSION['username'] = $username;
+			$_SESSION['level'] = "pimpinan";
+			$_SESSION['skpd'] = $data['skpd'];
+			header("location:../admin/index.php");
+	
+		} else if($data['level']=="skpd"){
+			$_SESSION['username'] = $username;
+			$_SESSION['level'] = "skpd";
+			$_SESSION['skpd'] = $data['skpd'];
+			header("location:../admin/skpd_tapin/index.php");
+	
+		}
+	} else {
+		echo "<script>alert('Login gagal, cek kembali Username / NIP dan Password / TOKEN anda !');document.location='../index.php'</script>";
+	}
 
 	// Login Admin
-	if($data['level']=="admin"){
-
-		$_SESSION['username'] = $username;
-		$_SESSION['level'] = "admin";
-		header("location:../admin/index.php");
-
-	// Login SKPD
-	}else if($data['level']=="skpd"){
-		$_SESSION['username'] = $username;
-		$_SESSION['level'] = "skpd";
-		$_SESSION['skpd'] = $data['skpd'];
-		header("location:../admin/skpd_tapin/index.php");
-
-	};
 
 } else {
   // Query Pegawai

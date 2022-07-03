@@ -1,7 +1,7 @@
 <?php
 require 'element/header.php';
 
-$query = mysqli_query($con,"SELECT data_pegawai.*, table_pangkat.id, table_pangkat.golongan_pangkat_tujuan, table_pangkat.admin, table_pangkat.pimpinan, file_path, sk_kenaikan_pangkat_terakhir, fc_sk_cpns_pns, fc_skp, fc_kp FROM table_pangkat INNER JOIN data_pegawai ON table_pangkat.nip = data_pegawai.nip ORDER BY table_pangkat.created_at DESC");
+$query = mysqli_query($con,"SELECT data_pegawai.*, table_pangkat.id, table_pangkat.golongan_pangkat_tujuan, table_pangkat.admin, table_pangkat.pimpinan,  file_path_sk_kenaikan_pangkat_terakhir, file_path_fc_sk_cpns_pns, file_path_fc_skp, file_path_fc_kp, sk_kenaikan_pangkat_terakhir, fc_sk_cpns_pns, fc_skp, fc_kp FROM table_pangkat INNER JOIN data_pegawai ON table_pangkat.nip = data_pegawai.nip ORDER BY table_pangkat.created_at DESC");
 
 // Alert hapus Ajuan
 if (isset($_SESSION['pesan'])) {
@@ -80,7 +80,12 @@ $_SESSION['pesan'] = '';
 															<td><?php echo $row['fc_sk_cpns_pns'] == "true" ? "ADA" : "TIDAK ADA"?></td>
 															<td><?php echo $row['fc_skp'] == "true" ? "ADA" : "TIDAK ADA"?></td>
 															<td><?php echo $row['fc_kp'] == "true" ? "ADA" : "TIDAK ADA"?></td>
-															<td><a href="<?=$row['file_path']?>">Lihat document</a></td>
+															<td>
+                                                                <a href="<?= base_url($row['file_path_sk_kenaikan_pangkat_terakhir']);?>">Lihat SK Kenaikan Pangkat Terakhir</a><br />
+                                                                <a href="<?= base_url($row['file_path_fc_sk_cpns_pns']);?>">Lihat Fotocopy SK CPNS & PNS</a><br />
+                                                                <a href="<?= base_url($row['file_path_fc_skp']);?>">Lihat Fotocopy SKP</a><br />
+                                                                <a href="<?= base_url($row['file_path_fc_kp']);?>">Lihat Fotocopy Kartu Pegawai</a>
+                                                            </td>
 															<td><?php echo $row['admin']?></td>
                                                             <td class="text-center align-middle">
                                                                 <div class="dropdown">

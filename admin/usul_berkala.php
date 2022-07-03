@@ -1,7 +1,7 @@
 <?php
 require 'element/header.php';
 
-$query = "SELECT proses_usul_berkala.tanggal, proses_usul_berkala.nip, data_pegawai.nama, data_pegawai.gol_akhir, data_pegawai.unit_kerja_induk, proses_usul_berkala.keterangan, proses_usul_berkala.keterangan, proses_usul_berkala.kategori, berkas_ajuan_usul_berkala.form, berkas_ajuan_usul_berkala.sk_berkala_terakhir, berkas_ajuan_usul_berkala.sk_pangkat_terakhir, berkas_ajuan_usul_berkala.sk_pemangku_jabatan, berkas_ajuan_usul_berkala.file_path, berkas_ajuan_usul_berkala.admin
+$query = "SELECT proses_usul_berkala.tanggal, proses_usul_berkala.nip, data_pegawai.nama, data_pegawai.gol_akhir, data_pegawai.unit_kerja_induk, proses_usul_berkala.keterangan, proses_usul_berkala.keterangan, proses_usul_berkala.kategori, berkas_ajuan_usul_berkala.form, berkas_ajuan_usul_berkala.sk_berkala_terakhir, berkas_ajuan_usul_berkala.sk_pangkat_terakhir, berkas_ajuan_usul_berkala.sk_pemangku_jabatan, berkas_ajuan_usul_berkala.file_path_form, berkas_ajuan_usul_berkala.file_path_sk_berkala, berkas_ajuan_usul_berkala.file_path_sk_pangkat, berkas_ajuan_usul_berkala.file_path_sk_jabatan, berkas_ajuan_usul_berkala.admin
 FROM proses_usul_berkala 
 INNER JOIN data_pegawai ON proses_usul_berkala.nip = data_pegawai.nip 
 LEFT JOIN berkas_ajuan_usul_berkala ON berkas_ajuan_usul_berkala.nip = proses_usul_berkala.nip
@@ -134,7 +134,12 @@ $_SESSION['pesan'] = '';
 															<td><?php echo $row['sk_berkala_terakhir'] == "true" ? "ADA" : "TIDAK ADA";?></td>
 															<td><?php echo $row['sk_pangkat_terakhir'] == "true" ? "ADA" : "TIDAK ADA";?></td>
 															<td><?php echo $row['sk_pemangku_jabatan'] == "true" ? "ADA" : "TIDAK ADA";?></td>
-															<td><a href="<?=$row['file_path']?>">Lihat document</a></td>
+															<td>
+                                                                <a href="<?= base_url($row['file_path_form']);?>">Document Form Usul Berkala</a><br />
+                                                                <a href="<?= base_url($row['file_path_sk_berkala']);?>">Document SK Berkala Terakhir</a><br />
+                                                                <a href="<?= base_url($row['file_path_sk_pangkat']);?>">Document SK Pangkat Terakhir</a><br />
+                                                                <a href="<?= base_url($row['file_path_sk_jabatan']);?>">Document SK Pemangku Jabatan</a><br />
+                                                            </td>
                                                             <td><?php echo $row['keterangan']?></td>
                                                             <td><?php echo $row['admin']?></td>
 															

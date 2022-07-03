@@ -1,9 +1,5 @@
 <?php
     require 'element/header.php';
-    $nip = $_SESSION['nip'];
-
-    $query = "SELECT * FROM proses_usul_Berkala INNER JOIN data_pegawai ON proses_usul_Berkala.nip = data_pegawai.nip WHERE proses_usul_Berkala.nip = '$nip'";  
-    $result = mysqli_query($con, $query);
 
     // Alert Hapus Berkas
     if (isset($_SESSION['pesan']) && $_SESSION['pesan'] == '1') {

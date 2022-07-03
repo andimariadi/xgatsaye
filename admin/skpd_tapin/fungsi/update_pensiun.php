@@ -4,56 +4,78 @@ include 'buat_folder.php';
 if($_SESSION['level'] !="skpd"){
     header("location:../index.php");
 }
-if (isset($_FILES['document']) && $_FILES['document']['error'] === UPLOAD_ERR_OK) {
-	$fileTmpPath = $_FILES['document']['tmp_name'];
-	$fileName = $_FILES['document']['name'];
-	$fileSize = $_FILES['document']['size'];
-	$fileType = $_FILES['document']['type'];
+if (
+	(isset($_FILES['document_spp'])) ||
+	(isset($_FILES['document_fc_sk_cpns_pns'])) ||
+	(isset($_FILES['document_fc_ktp'])) ||
+	(isset($_FILES['document_foto']))
+) {
+	$fileTmpPath = $_FILES['document_spp']['tmp_name'];
+	$fileName = $_FILES['document_spp']['name'];
 	$fileNameCmps = explode(".", $fileName);
 	$fileExtension = strtolower(end($fileNameCmps));
-	$newFileName = "pensiun_".md5(time() . $fileName) . '.' . $fileExtension;
-} else {
-	$_SESSION['pesan'] = "Swal.fire({
-		icon: 'error',
-		title: 'Tidak ada document yang diupload!',
-		showConfirmButton: false,
-		timer: 1500
-	  });";
-	header('location:../data_pensiun.php');
-	return;
-}
-$filePath = "";
-$allowedfileExtensions = array('pdf');
-if (in_array($fileExtension, $allowedfileExtensions)) {
-	$uploadFileDir = buatFolderUpload();
-	$dest_path = $uploadFileDir . $newFileName;
-	
-	move_uploaded_file($fileTmpPath, $dest_path);
+	$document_spp = "document_spp_".md5(time() . $fileName) . '.' . $fileExtension;
 
-	$filePath = filePath("document", $newFileName);
-} else {
-	$_SESSION['pesan'] = "Swal.fire({
-		icon: 'error',
-		title: 'Document tidak valid!',
-		showConfirmButton: false,
-		timer: 1500
-	  });";
-	header('location:../data_pensiun.php');
-	return;
+	$filePath_document_spp = "";
+	$allowedfileExtensions = array('pdf');
+	if (in_array($fileExtension, $allowedfileExtensions)) {
+		$uploadFileDir = buatFolderUpload();
+		$dest_path = $uploadFileDir . $document_spp;		
+		move_uploaded_file($fileTmpPath, $dest_path);	
+		$filePath_document_spp = filePath("document", $document_spp);
+	}
+
+	$fileTmpPath = $_FILES['document_fc_sk_cpns_pns']['tmp_name'];
+	$fileName = $_FILES['document_fc_sk_cpns_pns']['name'];
+	$fileNameCmps = explode(".", $fileName);
+	$fileExtension = strtolower(end($fileNameCmps));
+	$document_fc_sk_cpns_pns = "document_fc_sk_cpns_pns_".md5(time() . $fileName) . '.' . $fileExtension;
+
+	$filePath_document_fc_sk_cpns_pns = "";
+	$allowedfileExtensions = array('pdf');
+	if (in_array($fileExtension, $allowedfileExtensions)) {
+		$uploadFileDir = buatFolderUpload();
+		$dest_path = $uploadFileDir . $document_fc_sk_cpns_pns;		
+		move_uploaded_file($fileTmpPath, $dest_path);	
+		$filePath_document_fc_sk_cpns_pns = filePath("document", $document_fc_sk_cpns_pns);
+	}
+
+	
+
+	$fileTmpPath = $_FILES['document_fc_ktp']['tmp_name'];
+	$fileName = $_FILES['document_fc_ktp']['name'];
+	$fileNameCmps = explode(".", $fileName);
+	$fileExtension = strtolower(end($fileNameCmps));
+	$document_fc_ktp = "document_fc_ktp".md5(time() . $fileName) . '.' . $fileExtension;
+
+	$filePath_document_fc_ktp = "";
+	$allowedfileExtensions = array('pdf');
+	if (in_array($fileExtension, $allowedfileExtensions)) {
+		$uploadFileDir = buatFolderUpload();
+		$dest_path = $uploadFileDir . $document_fc_ktp;		
+		move_uploaded_file($fileTmpPath, $dest_path);	
+		$filePath_document_fc_ktp = filePath("document", $document_fc_ktp);
+	}
+
+	$fileTmpPath = $_FILES['document_foto']['tmp_name'];
+	$fileName = $_FILES['document_foto']['name'];
+	$fileNameCmps = explode(".", $fileName);
+	$fileExtension = strtolower(end($fileNameCmps));
+	$document_foto = "document_foto_".md5(time() . $fileName) . '.' . $fileExtension;
+
+	$filePath_document_foto = "";
+	$allowedfileExtensions = array('pdf');
+	if (in_array($fileExtension, $allowedfileExtensions)) {
+		$uploadFileDir = buatFolderUpload();
+		$dest_path = $uploadFileDir . $document_foto;		
+		move_uploaded_file($fileTmpPath, $dest_path);	
+		$filePath_document_foto = filePath("document", $document_foto);
+	}
 }
+
 
 ?>
 <?php
-	if($filePath == "") {
-		$_SESSION['pesan'] = "Swal.fire({
-			icon: 'error',
-			title: 'Tidak ada document yang diupload!',
-			showConfirmButton: false,
-			timer: 1500
-		});";
-		header('location:../data_pensiun.php');
-		return;
-	}
 
 	require '../../../db_con/koneksi.php';
 	$id = htmlentities(trim( $_POST['id']));
@@ -80,9 +102,38 @@ if (in_array($fileExtension, $allowedfileExtensions)) {
 		header('location:../data_pensiun.php');
 	}
 	else {
-
+	
+	$xx = "";
+	if($filePath_document_spp) {
+		$xx .= ", file_path_spp = '{$filePath_document_spp}'";
+		
+		if (file_exists("../../..".$data['file_path_spp'])) {
+			unlink("../../..".$data['file_path_spp']);
+		}
+	}
+	if($filePath_document_fc_sk_cpns_pns) {
+		$xx .= ", file_path_sk = '{$filePath_document_fc_sk_cpns_pns}'";
+		
+		if (file_exists("../../..".$data['file_path_sk'])) {
+			unlink("../../..".$data['file_path_sk']);
+		}
+	}
+	if($filePath_document_fc_ktp) {
+		$xx .= ", file_path_ktp = '{$filePath_document_fc_ktp}'";
+		
+		if (file_exists("../../..".$data['file_path_ktp'])) {
+			unlink("../../..".$data['file_path_ktp']);
+		}
+	}
+	if($filePath_document_foto) {
+		$xx .= ", file_path_foto = '{$filePath_document_foto}'";
+		
+		if (file_exists("../../..".$data['file_path_foto'])) {
+			unlink("../../..".$data['file_path_foto']);
+		}
+	}
 	// SQL
-	$sql = "UPDATE `table_pensiun` SET `tmt_terakhir_jabatan`='{$tmt_terakhir_jabatan}',`tanggal_pensiun`='{$tanggal_pensiun}',`kategori_pensiun`='{$kategori_pensiun}', file_path = '{$filePath}' WHERE `id` = " . $id;
+	$sql = "UPDATE `table_pensiun` SET `tmt_terakhir_jabatan`='{$tmt_terakhir_jabatan}',`tanggal_pensiun`='{$tanggal_pensiun}',`kategori_pensiun`='{$kategori_pensiun}' {$xx} WHERE `id` = " . $id;
 		
 	$result = mysqli_query($con, $sql);
 	

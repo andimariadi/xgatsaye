@@ -213,12 +213,28 @@ $_SESSION['msg'] = '';
                         <span class="btn  text-left input-group-text" style="background-color: #eff3f6; width: 220px">No HP</span>
                     </div>
                     <input type="number" class="form-control bg-white" name="no_hp_baru" value="<?= $no_hp ?>" required>
-                </div>
-
+                </div>                
+                
+                <h3>Dokumen Persyaratan</h3>
+                <hr/>
                 <div class="form-group">
-                    <label>Dokumen Persyaratan</label>
-                    <input type="file" name="document" placeholder="Dokumen Persyaratan" class="form-control" />
-                    <p class="help-block">Gabungkan file yang akan diupload</p>
+                    <label>Form Usul Berkala</label>
+                    <input type="file" name="document_form" placeholder="Form Usul Berkala" class="form-control" />
+                </div>
+                
+                <div class="form-group">
+                    <label>SK Berkala Terakhir</label>
+                    <input type="file" name="document_sk_berkala" placeholder="SK Berkala Terakhir" class="form-control" />
+                </div>
+                
+                <div class="form-group">
+                    <label>SK Pangkat Terakhir</label>
+                    <input type="file" name="document_sk_pangkat" placeholder="SK Pangkat Terakhir" class="form-control" />
+                </div>
+                
+                <div class="form-group">
+                    <label>SK Pemangku Jabatan</label>
+                    <input type="file" name="document_sk_jabatan" placeholder="SK Pemangku Jabatan" class="form-control" />
                 </div>
             </div> 
             <div class="modal-footer">
@@ -253,13 +269,33 @@ $_SESSION['msg'] = '';
 
                 <div class="form-group">
                     <label>Kategori Pensiun</label>
-                    <textarea name="kategori_pensiun" placeholder="Kategori Pensiun" class="form-control"></textarea>
+                    <select class="form-control" name="kategori_pensiun">
+                        <option>BUP</option>
+                        <option>Pensiun Dini</option>
+                        <option>Janda</option>
+                        <option>Duda</option>
+                    </select>
+                </div>
+                <h3>Dokumen Persyaratan</h3>
+                <hr/>
+                <div class="form-group">
+                    <label>Surat Permohonan Pensiun</label>
+                    <input type="file" name="document_spp" placeholder="Surat Permohonan Pensiun" class="form-control" />
                 </div>
                 
                 <div class="form-group">
-                    <label>Dokumen Persyaratan</label>
-                    <input type="file" name="document" placeholder="Dokumen Persyaratan" class="form-control" />
-                    <p class="help-block">Gabungkan file yang akan diupload</p>
+                    <label>Fotocopy SK CPNS & PNS</label>
+                    <input type="file" name="document_fc_sk_cpns_pns" placeholder="Fotocopy SK CPNS & PNS" class="form-control" />
+                </div>
+                
+                <div class="form-group">
+                    <label>Fotocopy KTP</label>
+                    <input type="file" name="document_fc_ktp" placeholder="Fotocopy KTP" class="form-control" />
+                </div>
+                
+                <div class="form-group">
+                    <label>Pas Photo 3x4</label>
+                    <input type="file" name="document_foto" placeholder="Pas Photo 3x4" class="form-control" />
                 </div>
             </div>
             <div class="modal-footer">
@@ -304,10 +340,26 @@ $_SESSION['msg'] = '';
                     </select>
                 </div>
                 
+                <h3>Dokumen Persyaratan</h3>
+                <hr/>
                 <div class="form-group">
-                    <label>Dokumen Persyaratan</label>
-                    <input type="file" name="document" placeholder="Dokumen Persyaratan" class="form-control" />
-                    <p class="help-block">Gabungkan file yang akan diupload</p>
+                    <label>SK Kenaikan Pangkat Terakhir</label>
+                    <input type="file" name="document_sk_kenaikan_pangkat_terakhir" placeholder="SK Kenaikan Pangkat Terakhir" class="form-control" />
+                </div>
+                
+                <div class="form-group">
+                    <label>Fotocopy SK CPNS & PNS</label>
+                    <input type="file" name="document_fc_sk_cpns_pns" placeholder="Fotocopy SK CPNS & PNS" class="form-control" />
+                </div>
+                
+                <div class="form-group">
+                    <label>Fotocopy SKP</label>
+                    <input type="file" name="document_fc_skp" placeholder="Fotocopy SKP" class="form-control" />
+                </div>
+                
+                <div class="form-group">
+                    <label>Fotocopy Kartu Pegawai</label>
+                    <input type="file" name="document_fc_kp" placeholder="Fotocopy Kartu Pegawai" class="form-control" />
                 </div>
             </div>
             <div class="modal-footer">

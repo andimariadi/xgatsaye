@@ -1,7 +1,7 @@
 <?php 
 session_start();
  
-if($_SESSION['level'] !="admin"){
+if($_SESSION['level'] !="admin" && $_SESSION['level'] !="pimpinan"){
     header("location:../index.php");
     }
 ?>
@@ -48,8 +48,8 @@ if($_SESSION['level'] !="admin"){
     <script src="../assets/plugins/sweetalert/dist/sweetalert-dev.js"></script>
 
 	
-    <link rel="stylesheet" type="text/css" href="../../assets/plugins/sweetalert/dist/sweetalert2.min.css">
-    <script src="../../assets/plugins/sweetalert/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../assets/plugins/sweetalert/dist/sweetalert2.min.css">
+    <script src="../assets/plugins/sweetalert/dist/sweetalert2.min.js"></script>
 </head>
 
 <body class="">
@@ -81,12 +81,22 @@ if($_SESSION['level'] !="admin"){
 					<li class="nav-item">
 						<a href="index.php" class="nav-link"><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Beranda</span></a>
 					</li>
+					<?php if($_SESSION['level'] == 'admin'):?>
 
 					<li class="nav-item pcoded-hasmenu">
 						<a href="#!" class="nav-link"><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Database</span></a>
 						<ul class="pcoded-submenu">
 							<li class=""><a href="data_pegawai.php" class="">Data Pegawai</a></li>
-							<!-- <li class=""><a href="arsip.php" class="">Arsip</a></li> -->
+							<li class=""><a href="data_gaji.php" class="">Data Gaji</a></li>
+							<li class=""><a href="data_user.php" class="">Data Akun User</a></li>
+						</ul>
+					</li>
+
+					<li class="nav-item pcoded-hasmenu">
+						<a href="#!" class="nav-link"><span class="pcoded-micon"><i class="fas fa-bell"></i></span><span class="pcoded-mtext">Notifikasi</span></a>
+						<ul class="pcoded-submenu">
+							<li class=""><a href="notification_usulan_pangkat.php" class="">Usulan Pangkat</a></li>
+							<li class=""><a href="notification_kenaikan_gaji.php" class="">Kenaikan Gaji</a></li>
 						</ul>
 					</li>
 
@@ -131,7 +141,7 @@ if($_SESSION['level'] !="admin"){
 					<li class="nav-item">
 						<a href="data_pangkat.php" class="nav-link"><span class="pcoded-micon"><i class="far fa-list-alt"></i></span><span class="pcoded-mtext">Daftar Pengajuan Pangkat <?php if($pangkat > 0) echo '<span class="badge badge-light ml-2 bg-dark text-white">' . $pangkat . '</span>';?></span></a>
 					</li>
-
+					<?php endif;?>
 					<li class="nav-item pcoded-hasmenu">
 						<a href="#!" class="nav-link"><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Laporan
 						</span></a>

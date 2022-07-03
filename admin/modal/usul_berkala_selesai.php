@@ -11,7 +11,7 @@ if(isset($_POST["nip"])){
     <div class="row">
         <div class="col-12 justify-content-center">
 
-            <form method="post" action="fungsi/usul_berkala_selesai.php" class="text-center pt-3 pb-4">
+            <form method="post" action="fungsi/usul_berkala_selesai.php" class="pt-3 pb-4">
                 <input hidden type="text" name="nip" value="<?= $row['nip']; ?>">
                 <input hidden type="text" name="tanggal" value="<?= $row['tanggal']; ?>">
                 <input hidden type="text" name="bln_masa_jabatan" value="<?= $row['bln_masa_jabatan']; ?>">
@@ -32,8 +32,13 @@ if(isset($_POST["nip"])){
                 <input hidden type="text" name="masa_jabatan" value="<?= $row['masa_jabatan']; ?>">
                 <input hidden type="text" name="kategori" value="<?= $row['kategori']; ?>">
                 <input hidden type="text" name="tanggal_tmt" value="<?= $row['tanggal_tmt']; ?>">
+                <div class="form-group ml-5 mr-5">
+                    <label>Tanggal Terbit</label>
+                    <input type="date" class="form-control" name="tanggal_terbit" value="<?= date('Y-m-d');?>">
+                </div>
 
                 <div class="form-group ml-5 mr-5">
+                    <label>Penerima</label>
                     <input type="text" class="form-control" name="penerima" placeholder="Masukkan penerima...">
                 </div>
 

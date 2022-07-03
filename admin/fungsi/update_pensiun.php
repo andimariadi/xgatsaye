@@ -18,6 +18,20 @@ if($_SESSION['level'] !="admin"){
 	$sql = "UPDATE table_pensiun SET `spp`='{$spp}',`fc_sk_cpns_pns`='{$fc_sk_cpns_pns}',`fc_ktp`='{$fc_ktp}',`foto`='{$foto}', admin = '$proses' WHERE id = '$id'";
 	$result = mysqli_query($con, $sql);
 	
+	if($spp == "true" && $fc_sk_cpns_pns == "true" && $fc_ktp == "true" && $foto == "true" && $proses == 'APPROVE') {
+		$query_search = mysqli_query($con, "SELECT verifikator_berkala.email FROM `data_pegawai`
+		LEFT JOIN verifikator_berkala ON data_pegawai.unit_kerja_induk = verifikator_berkala.skpd
+		WHERE data_pegawai.nip = '{$nip}'");
+		$row = mysqli_fetch_assoc($query_search);
+
+		$to_email = $row['email'];
+		$to_nama = $row['nama'];
+		$to_subject = 'Informasi: Pengajuan pensiun telah selesai';
+		$to_body = "Hallo {$row['nama']} , kami informasikan bahwa berkas Anda telah selesai diproses. Terima kasih.";
+
+		require '../../plugins/kirim.php';
+	}
+	
 	if($result){
 		$_SESSION['pesan'] = "Swal.fire({
             icon: 'success',

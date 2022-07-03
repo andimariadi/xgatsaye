@@ -135,7 +135,7 @@ if(isset($_POST['tanggal_selesai'])) {
 															<td><?php echo $row['sk_berkala_terakhir'] == "true" ? "ADA" : "TIDAK ADA";?></td>
 															<td><?php echo $row['sk_pangkat_terakhir'] == "true" ? "ADA" : "TIDAK ADA";?></td>
 															<td><?php echo $row['sk_pemangku_jabatan'] == "true" ? "ADA" : "TIDAK ADA";?></td>
-															<td><a href="<?=$row['file_path']?>">Lihat document</a></td>
+															<td><a href="<?= base_url($row['file_path']);?>">Lihat document</a></td>
                                                             <td><?php echo $row['keterangan']?></td>
                                                             <td><?php echo $row['admin']?></td>
 														</tr>

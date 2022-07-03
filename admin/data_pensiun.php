@@ -1,7 +1,7 @@
 <?php
 require 'element/header.php';
 
-$query = mysqli_query($con,"SELECT data_pegawai.*, table_pensiun.id, table_pensiun.tmt_terakhir_jabatan, table_pensiun.tanggal_pensiun, table_pensiun.kategori_pensiun, table_pensiun.admin, table_pensiun.pimpinan, spp, fc_sk_cpns_pns, fc_ktp, foto, file_path FROM table_pensiun INNER JOIN data_pegawai ON table_pensiun.nip = data_pegawai.nip ORDER BY table_pensiun.created_at DESC");
+$query = mysqli_query($con,"SELECT data_pegawai.*, table_pensiun.id, table_pensiun.tmt_terakhir_jabatan, table_pensiun.tanggal_pensiun, table_pensiun.kategori_pensiun, table_pensiun.admin, table_pensiun.pimpinan, spp, fc_sk_cpns_pns, fc_ktp, foto, `file_path_spp`, `file_path_sk`, `file_path_ktp`, `file_path_foto` FROM table_pensiun INNER JOIN data_pegawai ON table_pensiun.nip = data_pegawai.nip ORDER BY table_pensiun.created_at DESC");
 
 // Alert hapus Ajuan
 if (isset($_SESSION['pesan'])) {
@@ -61,7 +61,10 @@ $_SESSION['pesan'] = '';
 															<th class="align-middle" style="background-color: #cecece; width: 18%" >Fotocopy SK CPNS & PNS</th>
 															<th class="align-middle" style="background-color: #cecece; width: 18%" >Fotocopy KTP</th>
 															<th class="align-middle" style="background-color: #cecece; width: 18%" >Pas Photo 3x4</th>
-															<th class="align-middle" style="background-color: #cecece; width: 18%" >Document</th>
+															<th class="align-middle" style="background-color: #cecece; width: 18%" >Document Surat Permohonan Pensiun</th>
+															<th class="align-middle" style="background-color: #cecece; width: 18%" >Document Fotocopy SK CPNS & PNS</th>
+															<th class="align-middle" style="background-color: #cecece; width: 18%" >Document Fotocopy KTP</th>
+															<th class="align-middle" style="background-color: #cecece; width: 18%" >Document Pas Photo 3x4</th>
 															<th class="align-middle" style="background-color: #cecece; width: 18%" >Approval Admin</th>
                                                             <th class="align-middle" style="background-color: #cecece; width: 5%" >Action</th>
 														</tr>
@@ -84,7 +87,10 @@ $_SESSION['pesan'] = '';
 															<td><?php echo $row['fc_sk_cpns_pns'] == "true" ? "ADA" : "TIDAK ADA"?></td>
 															<td><?php echo $row['fc_ktp'] == "true" ? "ADA" : "TIDAK ADA"?></td>
 															<td><?php echo $row['foto'] == "true" ? "ADA" : "TIDAK ADA"?></td>
-															<td><a href="<?=$row['file_path']?>">Lihat document</a></td>
+															<td><a href="<?= base_url($row['file_path_spp']);?>">Lihat document</a></td>
+															<td><a href="<?= base_url($row['file_path_sk']);?>">Lihat document</a></td>
+															<td><a href="<?= base_url($row['file_path_ktp']);?>">Lihat document</a></td>
+															<td><a href="<?= base_url($row['file_path_foto']);?>">Lihat document</a></td>
 															<td><?php echo $row['admin']?></td>
 															<!-- <td><?php echo $row['pimpinan']?></td> -->
                                                             <td class="text-center align-middle">

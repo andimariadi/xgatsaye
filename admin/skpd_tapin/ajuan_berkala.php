@@ -57,7 +57,10 @@ $_SESSION['pesan'] = '';
 															<th class="align-middle" style="background-color: #cecece; width: 15%" >Nama</th>
 															<th class="align-middle" style="background-color: #cecece; width: 1%" >Gol/Pangkat</th>
 															<th class="align-middle" style="background-color: #cecece; width: 18%" >Unit Kerja Induk</th>
-                                                            <th class="align-middle" style="background-color: #cecece; width: 18%" >Document</th>
+                                                            <th class="align-middle" style="background-color: #cecece; width: 18%" >Form Usul Berkala</th>
+                                                            <th class="align-middle" style="background-color: #cecece; width: 18%" >SK Berkala Terakhir</th>
+                                                            <th class="align-middle" style="background-color: #cecece; width: 18%" >SK Pangkat Terakhir</th>
+                                                            <th class="align-middle" style="background-color: #cecece; width: 18%" >SK Pemangku Jabatan</th>
 															<th class="align-middle" style="background-color: #cecece; width: 18%" >Keterangan</th>
 															<th class="align-middle" style="background-color: #cecece; width: 18%" >Action</th>
 														</tr>
@@ -74,7 +77,10 @@ $_SESSION['pesan'] = '';
 															<td><?php echo $row['nama']?></td>
 															<td><?php echo $row['gol_akhir']?></td>
 															<td><?php echo $row['unit_kerja_induk']?></td>
-															<td><a href="<?=$row['file_path']?>">Lihat document</a></td>
+															<td><a href="<?= base_url($row['file_path_form']);?>">Lihat document</a></td>
+															<td><a href="<?= base_url($row['file_path_sk_berkala']);?>">Lihat document</a></td>
+															<td><a href="<?= base_url($row['file_path_sk_pangkat']);?>">Lihat document</a></td>
+															<td><a href="<?= base_url($row['file_path_sk_jabatan']);?>">Lihat document</a></td>
 															<td><?php echo $row['keterangan']?></td>
                                                             <td><div class="dropdown">
                                                                 <button class="btn btn-outline-warning btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -83,7 +89,7 @@ $_SESSION['pesan'] = '';
                                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="dropdownMenuButton">
 
                                                                     <a class="dropdown-item text-secondary usul_berkala" href="#" data-toggle="modal" data-target="#edit_modal" data-nip="<?= $row['nip'];?>" data-no_hp="<?= $row['no_hp'];?>"
-                                                                    data-file_path="<?= $row['file_path'];?>">
+                                                                    >
                                                                         <i class="fas fa-edit"></i>
                                                                         Edit
                                                                     </a>
@@ -137,14 +143,32 @@ $_SESSION['pesan'] = '';
                     <input type="number" class="form-control bg-white" name="no_hp_baru" value="<?= $no_hp ?>" required>
                 </div>
 
+                
+                <h3>Dokumen Persyaratan</h3>
+                <hr/>
                 <div class="form-group">
-                    <label>Dokumen Persyaratan</label>
-                    <input type="file" name="document" placeholder="Dokumen Persyaratan" class="form-control" />
-                    <p class="help-block">Gabungkan file yang akan diupload</p>
+                    <label>Form Usul Berkala</label>
+                    <input type="file" name="document_form" placeholder="Form Usul Berkala" class="form-control" />
+                    <span class="text-muted">Upload file akan menimpa file sebelumnya.</span>
                 </div>
                 
-                <a href="#" id="file_path">Lihat dokument terupload</a>
-
+                <div class="form-group">
+                    <label>SK Berkala Terakhir</label>
+                    <input type="file" name="document_sk_berkala" placeholder="SK Berkala Terakhir" class="form-control" />
+                    <span class="text-muted">Upload file akan menimpa file sebelumnya.</span>
+                </div>
+                
+                <div class="form-group">
+                    <label>SK Pangkat Terakhir</label>
+                    <input type="file" name="document_sk_pangkat" placeholder="SK Pangkat Terakhir" class="form-control" />
+                    <span class="text-muted">Upload file akan menimpa file sebelumnya.</span>
+                </div>
+                
+                <div class="form-group">
+                    <label>SK Pemangku Jabatan</label>
+                    <input type="file" name="document_sk_jabatan" placeholder="SK Pemangku Jabatan" class="form-control" />
+                    <span class="text-muted">Upload file akan menimpa file sebelumnya.</span>
+                </div>
 
             </div>
             <div class="modal-footer">
@@ -211,7 +235,6 @@ $_SESSION['pesan'] = '';
         var modal = $(this);
         modal.find('.modal-body input[name=nip]').val(nip);
         modal.find('.modal-body input[name=no_hp_lama], .modal-body input[name=no_hp_baru]').val(no_hp);
-        modal.find('.modal-body #file_path').attr('href', file_path);
     });
 </script>
 

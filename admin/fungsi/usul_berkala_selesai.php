@@ -8,9 +8,10 @@ if($_SESSION['level'] !="admin"){
 include "../../db_con/koneksi.php";
 
 date_default_timezone_set("Asia/Singapore");
-$tanggal_selesai = date("Y-m-d");;
+$tanggal_selesai = date("Y-m-d");
 
 $tanggal_usul = $_POST['tanggal'];
+$tanggal_terbit = $_POST['tanggal_terbit'];
 $nip = $_POST['nip'];
 
 $nomor_sk = $_POST['nomor_sk'];
@@ -51,7 +52,7 @@ $penerima = $_POST['penerima'];
 	$hapus = mysqli_query($con, "DELETE FROM proses_usul_berkala WHERE nip = '$nip'");
 
 	// Meinput Ke Table Arsip
-	$sql2 = "INSERT INTO `$db_name`.`riwayat_usul_berkala` (`tanggal_usul`, `tanggal_selesai`, `nip`, `nomor_sk`, `tanggal_sk`, `nama_nip`, `tempat_tgl_lahir`, `pangkat_jabatan`, `unit_skpd`, `gaji_pokok_lama`, `tanggal_sk_lama`, `nomor_sk_lama`, `tanggal_tmt_lama`, `masa_kerja_lama`, `gaji_pokok`, `masa_jabatan`, `bln_masa_jabatan`, `kategori`, `tanggal_tmt`, `penerima`) VALUES ('$tanggal_usul', '$tanggal_selesai', '$nip', '$nomor_sk', '$tanggal_sk', '$nama_nip', '$tempat_tgl_lahir', '$pangkat_jabatan', '$unit_skpd', '$gaji_pokok_lama', '$tanggal_sk_lama', '$nomor_sk_lama', '$tanggal_tmt_lama', '$masa_kerja_lama', '$gaji_pokok', '$masa_jabatan', '$bln_masa_jabatan', '$kategori', '$tanggal_tmt', '$penerima')";
+	$sql2 = "INSERT INTO `$db_name`.`riwayat_usul_berkala` (`tanggal_usul`, `tanggal_selesai`, `tanggal_terbit`, `nip`, `nomor_sk`, `tanggal_sk`, `nama_nip`, `tempat_tgl_lahir`, `pangkat_jabatan`, `unit_skpd`, `gaji_pokok_lama`, `tanggal_sk_lama`, `nomor_sk_lama`, `tanggal_tmt_lama`, `masa_kerja_lama`, `gaji_pokok`, `masa_jabatan`, `bln_masa_jabatan`, `kategori`, `tanggal_tmt`, `penerima`) VALUES ('$tanggal_usul', '$tanggal_selesai', '$tanggal_terbit','$nip', '$nomor_sk', '$tanggal_sk', '$nama_nip', '$tempat_tgl_lahir', '$pangkat_jabatan', '$unit_skpd', '$gaji_pokok_lama', '$tanggal_sk_lama', '$nomor_sk_lama', '$tanggal_tmt_lama', '$masa_kerja_lama', '$gaji_pokok', '$masa_jabatan', '$bln_masa_jabatan', '$kategori', '$tanggal_tmt', '$penerima')";
 	$result2 = mysqli_query($con, $sql2);
 
 	if ($result2) {

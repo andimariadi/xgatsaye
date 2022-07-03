@@ -15,8 +15,6 @@ if($_SESSION['level'] !="skpd"){
 <html lang="en">
 
 <head>
-
-	<title></title>
 	<!-- Meta -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -27,26 +25,26 @@ if($_SESSION['level'] !="skpd"){
 	<title>Berkala SKPD</title>
 
 	<!-- Favicon icon -->
-	<link rel="icon" href="../../../assets/images/favicon.webp" type="image/x-icon">
+	<link rel="icon" href="../../assets/images/favicon.webp" type="image/x-icon">
 	<!-- fontawesome icon -->
-	<link rel="stylesheet" href="../../../assets/fonts/fontawesome/css/fontawesome-all.min.css">
+	<link rel="stylesheet" href="../../assets/fonts/fontawesome/css/fontawesome-all.min.css">
 	<!-- animation css -->
-	<link rel="stylesheet" href="../../../assets/plugins/animation/css/animate.min.css">
+	<link rel="stylesheet" href="../../assets/plugins/animation/css/animate.min.css">
 
 	<!-- vendor css -->
-	<link rel="stylesheet" href="../../../assets/css/style.css">
+	<link rel="stylesheet" href="../../assets/css/style.css">
 
 	<!-- JQuery -->
-	<script src="../../../assets/js/vendor-all.min.js"></script>
+	<script src="../../assets/js/vendor-all.min.js"></script>
 
 	<!-- DataTables -->
-	<link rel="stylesheet" type="text/css" href="../../../assets/plugins/data-tables/dataTables.bootstrap4.min.css">
-	<script src="../../../assets/plugins/data-tables/jquery.dataTables.min.js"></script>
-	<script src="../../../assets/plugins/data-tables/dataTables.bootstrap4.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../assets/plugins/data-tables/dataTables.bootstrap4.min.css">
+	<script src="../../assets/plugins/data-tables/jquery.dataTables.min.js"></script>
+	<script src="../../assets/plugins/data-tables/dataTables.bootstrap4.min.js"></script>
 
 	<!-- Sweetalert -->
-	<link rel="stylesheet" type="text/css" href="../../../assets/plugins/sweetalert/dist/sweetalert2.min.css">
-    <script src="../../../assets/plugins/sweetalert/dist/sweetalert2.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../assets/plugins/sweetalert/dist/sweetalert2.min.css">
+    <script src="../../assets/plugins/sweetalert/dist/sweetalert2.min.js"></script>
 </head>
 
 <body class="">
@@ -147,7 +145,7 @@ if($_SESSION['level'] !="skpd"){
 						<div class="col-12">
 							<form method="post" action="fungsi/update_password.php" class="text-center pt-1 pb-1">
 
-								<input  hidden type="text" name="username" value="<?= $username ?>">
+								<input  hidden type="text" name="username" value="<?= $_SESSION['username'] ?>">
 
 								<div class="input-group mb-3">
 									<div class="input-group-prepend">

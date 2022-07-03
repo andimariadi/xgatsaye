@@ -106,11 +106,15 @@ $pdf->Cell(55,6, 'NAMA',1,0,'C');
 $pdf->Cell(41,6, 'NIP',1,0,'C');
 $pdf->Cell(21,6, 'PANGKAT',1,0,'C');
 $pdf->Cell(136,6, 'UNIT KERJA INDUK',1,0,'C');
-$pdf->Cell(40,6, 'KETERANGAN',1,0,'C');
+$pdf->Cell(40,6, 'ADMIN',1,0,'C');
 $pdf->Cell(35,6, 'TANGGAL',1,0,'C');
 
 
-$query = "SELECT proses_usul_berkala.tanggal, proses_usul_berkala.nip, data_pegawai.nama, data_pegawai.gol_akhir, data_pegawai.unit_kerja_induk, proses_usul_berkala.keterangan, proses_usul_berkala.keterangan, proses_usul_berkala.kategori FROM proses_usul_berkala INNER JOIN data_pegawai ON proses_usul_berkala.nip = data_pegawai.nip ORDER BY tanggal DESC";
+$query = "SELECT proses_usul_berkala.tanggal, proses_usul_berkala.nip, data_pegawai.nama, data_pegawai.gol_akhir, data_pegawai.unit_kerja_induk, proses_usul_berkala.keterangan, proses_usul_berkala.keterangan, proses_usul_berkala.kategori , berkas_ajuan_usul_berkala.admin
+FROM proses_usul_berkala 
+INNER JOIN data_pegawai ON proses_usul_berkala.nip = data_pegawai.nip 
+JOIN berkas_ajuan_usul_berkala ON proses_usul_berkala.nip = berkas_ajuan_usul_berkala.nip
+ORDER BY tanggal DESC";
         $result = mysqli_query($con, $query);
       
         
@@ -124,7 +128,7 @@ $query = "SELECT proses_usul_berkala.tanggal, proses_usul_berkala.nip, data_pega
     $pdf->Cell(41,6,$row['nip'],1,0,'C');
     $pdf->Cell(21,6,$row['kategori'],1,0,'C');
     $pdf->Cell(136,6,$row['unit_kerja_induk'],1,0,'L');
-    $pdf->Cell(40,6,$row['keterangan'],1,0,'C');
+    $pdf->Cell(40,6,$row['admin'],1,0,'C');
     $pdf->Cell(35,6,$row['tanggal'],1,0,'C');
             
 
