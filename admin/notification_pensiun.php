@@ -117,7 +117,7 @@ $_SESSION['msg'] = '';
 <!-- Modal tambah gaji -->
 <div id="modal_send_message" class="modal fade">  
     <div class="modal-dialog">
-        <form method="POST"  enctype="multipart/form-data" action="fungsi/notification_usulan_pangkat.php">
+        <form method="POST"  enctype="multipart/form-data" action="fungsi/notification_pensiun.php">
         <div class="modal-content">   
             <div class="modal-header">  
                 <h4 class="modal-title">Kirim Notifikasi</h4>  
@@ -134,6 +134,16 @@ $_SESSION['msg'] = '';
                 <div class="form-group">
                     <label>Email</label>
                     <input type="email" class="form-control" name="email" placeholder="Masukkan email..">
+                </div>
+                <div class="form-group">
+                    <label>Kategori Pensiun</label>
+                    <select class="form-control" name="kategori_pensiun" required>
+                        <option value="">Pilih</option>
+                        <option>BUP</option>
+                        <option>Pensiun Dini</option>
+                        <option>Janda</option>
+                        <option>Duda</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label>Kirim Pesan</label>
@@ -160,7 +170,7 @@ $_SESSION['msg'] = '';
         modal.find('.modal-body input[name=nama]').val(nama);
         modal.find('.modal-body input[name=email]').val(email);
         
-        modal.find('.modal-body textarea[name=message]').val('Hallo ' + nama + ', kami dari BKSPDM ingin menginformasikan bahwa Anda diusulkan untuk melakuan kenaikan pangkat, silahkan lengkapi berkas Anda. Dan ajukan menggunakan menu usul berkala di SKPD Anda. Terima kasih');
+        modal.find('.modal-body textarea[name=message]').val('Hallo ' + nama + ', kami dari BKSPDM ingin menginformasikan bahwa Anda diusulkan untuk melakuan pensiun, silahkan lengkapi berkas Anda. Dan ajukan menggunakan menu usul berkala di SKPD Anda. Terima kasih');
     });
 
     $('#example').DataTable();

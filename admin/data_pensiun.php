@@ -61,10 +61,6 @@ $_SESSION['pesan'] = '';
 															<th class="align-middle" style="background-color: #cecece; width: 18%" >Fotocopy SK CPNS & PNS</th>
 															<th class="align-middle" style="background-color: #cecece; width: 18%" >Fotocopy KTP</th>
 															<th class="align-middle" style="background-color: #cecece; width: 18%" >Pas Photo 3x4</th>
-															<th class="align-middle" style="background-color: #cecece; width: 18%" >Document Surat Permohonan Pensiun</th>
-															<th class="align-middle" style="background-color: #cecece; width: 18%" >Document Fotocopy SK CPNS & PNS</th>
-															<th class="align-middle" style="background-color: #cecece; width: 18%" >Document Fotocopy KTP</th>
-															<th class="align-middle" style="background-color: #cecece; width: 18%" >Document Pas Photo 3x4</th>
 															<th class="align-middle" style="background-color: #cecece; width: 18%" >Approval Admin</th>
                                                             <th class="align-middle" style="background-color: #cecece; width: 5%" >Action</th>
 														</tr>
@@ -83,14 +79,10 @@ $_SESSION['pesan'] = '';
 															<td><?php echo $row['tmt_terakhir_jabatan']?></td>
 															<td><?php echo $row['tanggal_pensiun']?></td>
 															<td><?php echo $row['kategori_pensiun']?></td>
-															<td><?php echo $row['spp'] == "true" ? "ADA" : "TIDAK ADA"?></td>
-															<td><?php echo $row['fc_sk_cpns_pns'] == "true" ? "ADA" : "TIDAK ADA"?></td>
-															<td><?php echo $row['fc_ktp'] == "true" ? "ADA" : "TIDAK ADA"?></td>
-															<td><?php echo $row['foto'] == "true" ? "ADA" : "TIDAK ADA"?></td>
-															<td><a href="<?= base_url($row['file_path_spp']);?>">Lihat document</a></td>
-															<td><a href="<?= base_url($row['file_path_sk']);?>">Lihat document</a></td>
-															<td><a href="<?= base_url($row['file_path_ktp']);?>">Lihat document</a></td>
-															<td><a href="<?= base_url($row['file_path_foto']);?>">Lihat document</a></td>
+															<td><a href="<?= base_url($row['file_path_spp']);?>">Document Surat Permohonan Pensiun</a></td>
+															<td><a href="<?= base_url($row['file_path_sk']);?>">Document Fotocopy SK CPNS & PNS</a></td>
+															<td><a href="<?= base_url($row['file_path_ktp']);?>">Document Fotocopy KTP</a></td>
+															<td><a href="<?= base_url($row['file_path_foto']);?>">Document Pas Photo 3x4</a></td>
 															<td><?php echo $row['admin']?></td>
 															<!-- <td><?php echo $row['pimpinan']?></td> -->
                                                             <td class="text-center align-middle">

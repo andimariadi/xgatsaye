@@ -76,16 +76,10 @@ $_SESSION['pesan'] = '';
 														
 															<td><?php echo $row['unit_kerja_induk']?></td>
 															<td><?php echo $row['golongan_pangkat_tujuan']?></td>
-															<td><?php echo $row['sk_kenaikan_pangkat_terakhir'] == "true" ? "ADA" : "TIDAK ADA"?></td>
-															<td><?php echo $row['fc_sk_cpns_pns'] == "true" ? "ADA" : "TIDAK ADA"?></td>
-															<td><?php echo $row['fc_skp'] == "true" ? "ADA" : "TIDAK ADA"?></td>
-															<td><?php echo $row['fc_kp'] == "true" ? "ADA" : "TIDAK ADA"?></td>
-															<td>
-                                                                <a href="<?= base_url($row['file_path_sk_kenaikan_pangkat_terakhir']);?>">Lihat SK Kenaikan Pangkat Terakhir</a><br />
-                                                                <a href="<?= base_url($row['file_path_fc_sk_cpns_pns']);?>">Lihat Fotocopy SK CPNS & PNS</a><br />
-                                                                <a href="<?= base_url($row['file_path_fc_skp']);?>">Lihat Fotocopy SKP</a><br />
-                                                                <a href="<?= base_url($row['file_path_fc_kp']);?>">Lihat Fotocopy Kartu Pegawai</a>
-                                                            </td>
+															<td><a href="<?= base_url($row['file_path_sk_kenaikan_pangkat_terakhir']);?>">Lihat SK Kenaikan Pangkat Terakhir</a></td>
+															<td><a href="<?= base_url($row['file_path_fc_sk_cpns_pns']);?>">Lihat Fotocopy SK CPNS & PNS</a></td>
+															<td><a href="<?= base_url($row['file_path_fc_skp']);?>">Lihat Fotocopy SKP</a></td>
+															<td><a href="<?= base_url($row['file_path_fc_kp']);?>">Lihat Fotocopy Kartu Pegawai</a></td>
 															<td><?php echo $row['admin']?></td>
                                                             <td class="text-center align-middle">
                                                                 <div class="dropdown">

@@ -190,6 +190,8 @@ $_SESSION['msg'] = '';
         
         modal.find('.modal-body textarea[name=message]').val('Hallo ' + nama + ', kami dari BKSPDM ingin menginformasikan bahwa Anda diusulkan untuk melakuan kenaikan pangkat serta gaji, silahkan lengkapi berkas Anda. Dan ajukan menggunakan menu usul berkala di SKPD Anda. Terima kasih');
     });
+
+    $('#example').DataTable();
 </script>
 <?php
 require 'element/footer.php';

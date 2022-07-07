@@ -97,6 +97,7 @@ if($_SESSION['level'] !="admin" && $_SESSION['level'] !="pimpinan"){
 						<ul class="pcoded-submenu">
 							<li class=""><a href="notification_usulan_pangkat.php" class="">Usulan Pangkat</a></li>
 							<li class=""><a href="notification_kenaikan_gaji.php" class="">Kenaikan Gaji</a></li>
+							<li class=""><a href="notification_pensiun.php" class="">Pensiun</a></li>
 						</ul>
 					</li>
 
