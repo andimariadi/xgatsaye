@@ -1,7 +1,7 @@
 <?php
 require 'element/header.php';
 
-$query = mysqli_query($con,"SELECT data_pegawai.*, table_pangkat.id, table_pangkat.golongan_pangkat_tujuan, table_pangkat.admin, table_pangkat.pimpinan,  file_path_sk_kenaikan_pangkat_terakhir, file_path_fc_sk_cpns_pns, file_path_fc_skp, file_path_fc_kp, sk_kenaikan_pangkat_terakhir, fc_sk_cpns_pns, fc_skp, fc_kp FROM table_pangkat INNER JOIN data_pegawai ON table_pangkat.nip = data_pegawai.nip ORDER BY table_pangkat.created_at DESC");
+$query = mysqli_query($con,"SELECT data_pegawai.*, table_pangkat.id, table_pangkat.golongan_pangkat_tujuan, table_pangkat.admin, table_pangkat.pimpinan,  file_path_sk_kenaikan_pangkat_terakhir, file_path_fc_sk_cpns_pns, file_path_fc_skp, file_path_fc_kp, sk_kenaikan_pangkat_terakhir, fc_sk_cpns_pns, fc_skp, fc_kp, masa_kerja_golongan, gaji_pokok, pendidikan, jabatan FROM table_pangkat INNER JOIN data_pegawai ON table_pangkat.nip = data_pegawai.nip ORDER BY table_pangkat.created_at DESC");
 
 // Alert hapus Ajuan
 if (isset($_SESSION['pesan'])) {
@@ -60,7 +60,6 @@ $_SESSION['pesan'] = '';
 															<th class="align-middle" style="background-color: #cecece; width: 18%" >Fotocopy SKP</th>
 															<th class="align-middle" style="background-color: #cecece; width: 18%" >Fotocopy Kartu Pegawai</th>
 															<th class="align-middle" style="background-color: #cecece; width: 18%" >Document</th>
-															<th class="align-middle" style="background-color: #cecece; width: 18%" >Approval Admin</th>
                                                             <th class="align-middle" style="background-color: #cecece; width: 5%" >Action</th>
 														</tr>
                                                     </thead>
@@ -107,7 +106,24 @@ $_SESSION['pesan'] = '';
                                                                         Detail
                                                                     </a>
 
-                                                                    <a class="dropdown-item cetak_sk" href="cetak_sk/cetak_sk_pangkat.php?nip=<?= $row['nip'];?>" target="blank">
+                                                                    <!-- <a class="dropdown-item cetak_sk" href="cetak_sk/cetak_sk_pangkat.php?nip=<?= $row['nip'];?>" target="blank">
+                                                                        <i class="fa fa-print"></i>
+                                                                        Print
+                                                                    </a> -->
+
+                                                                    <a class="dropdown-item cetak_sk" href="#" data-toggle="modal" data-target="#modal_print"
+                                                                    data-id="<?php echo $row['id'];?>"
+                                                                    data-nama="<?php echo $row['nama'];?>"
+                                                                    data-nip="<?php echo $row['nip'];?>"
+                                                                    data-tempat_lahir="<?php echo $row['tempat_lahir'];?>"
+                                                                    data-tanggal_lahir="<?php echo $row['tanggal_lahir'];?>"
+                                                                    data-unit_kerja="<?php echo $row['unit_kerja'];?>"
+                                                                    data-instansi_induk="<?php echo $row['unit_kerja_induk'];?>"
+                                                                    data-jabatan="<?php echo $row['jabatan'];?>"
+                                                                    data-pendidikan="<?php echo $row['pendidikan'];?>"
+                                                                    data-masa_kerja_golongan="<?php echo $row['masa_kerja_golongan'];?>"
+                                                                    data-gaji_pokok="<?php echo $row['gaji_pokok'];?>"
+                                                                    >
                                                                         <i class="fa fa-print"></i>
                                                                         Print
                                                                     </a>
@@ -194,7 +210,69 @@ $_SESSION['pesan'] = '';
                                         </div>
                                     </div>  
                                 </div>  
-                            </div>                          
+                            </div>
+                            
+
+                            
+                            <!-- Modal Usul Berkala -->
+                            <div id="modal_print" class="modal fade">  
+                                <div class="modal-dialog">
+                                    <form method="POST"  enctype="multipart/form-data" action="cetak_sk/cetak_sk_pangkat.php">
+                                    <div class="modal-content">   
+                                        <div class="modal-header">  
+                                            <h4 class="modal-title">Data Pangkat</h4>  
+                                        </div>  
+                                        <div class="modal-body">
+                                            <input id="id" name="id" type="hidden" />
+                                            <div class="form-group mb-3">
+                                                <label class="form-label">Nama lengkap</label>
+                                                <input type="text" name ="nama" class="form-control" placeholder="Masukkan nama lengkap.." readonly required />
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label class="form-label">NIP</label>
+                                                <input type="text" name ="nip" class="form-control" placeholder="Masukkan NIP.." readonly required />
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label class="form-label">Tempat Lahir</label>
+                                                <input type="text" name ="tempat_lahir" class="form-control" placeholder="Masukkan Tempat lahir.." readonly required />
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label class="form-label">Tanggal Lahir</label>
+                                                <input type="date" name ="tanggal_lahir" class="form-control" placeholder="Masukkan tanggal lahir.." readonly required />
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label class="form-label">Unit Kerja</label>
+                                                <input type="text" name ="unit_kerja" class="form-control" placeholder="Masukkan Unit Kerja.." readonly required />
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label class="form-label">Instansi Induk</label>
+                                                <input type="text" name ="instansi_induk" class="form-control" placeholder="Masukkan Instansi Kerja.." readonly required />
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label class="form-label">Pendidikan</label>
+                                                <input type="text" name ="pendidikan" class="form-control" placeholder="Masukkan Pendidikan.." required />
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label class="form-label">Jabatan</label>
+                                                <input type="text" name ="jabatan" class="form-control" placeholder="Masukkan Jabatan.." required />
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label class="form-label">Masa Kerja Golongan</label>
+                                                <input type="text" name ="masa_kerja_golongan" class="form-control" placeholder="Masukkan Masa Kerja Golongan.." required />
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label class="form-label">Gaji Pokok</label>
+                                                <input type="text" name ="gaji_pokok" class="form-control" placeholder="Masukkan Gaji Pokok.." required />
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                            <button type="submit" class="btn btn-warning">Simpan</button>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>  
+                            </div>
                         </div>
                         <!-- [ Main Content ] end -->
                     </div>
@@ -245,6 +323,35 @@ $_SESSION['pesan'] = '';
         modal.find('.modal-body input[name=foto]').prop('checked',foto);
         modal.find('.modal-body select[name=proses]').val(proses);
     });
+
+    
+    
+    $('#modal_print').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget);
+        var id                  = button.data('id');
+        var nama                = button.data('nama');
+        var nip                 = button.data('nip');
+        var tempat_lahir       = button.data('tempat_lahir');
+        var tanggal_lahir       = button.data('tanggal_lahir');
+        var unit_kerja          = button.data('unit_kerja');
+        var pendidikan          = button.data('pendidikan');
+        var jabatan          = button.data('jabatan');
+        var instansi_induk          = button.data('instansi_induk');
+        var masa_kerja_golongan = button.data('masa_kerja_golongan');
+        var pensiun_pokok       = button.data('pensiun_pokok');
+        var modal = $(this);
+        modal.find('.modal-body input[name=id]').val(id);
+        modal.find('.modal-body input[name=nama]').val(nama);
+        modal.find('.modal-body input[name=nip]').val(nip);
+        modal.find('.modal-body input[name=tempat_lahir]').val(tempat_lahir);
+        modal.find('.modal-body input[name=tanggal_lahir]').val(tanggal_lahir);
+        modal.find('.modal-body input[name=unit_kerja]').val(unit_kerja);
+        modal.find('.modal-body input[name=pendidikan]').val(pendidikan);
+        modal.find('.modal-body input[name=jabatan]').val(jabatan);
+        modal.find('.modal-body input[name=instansi_induk]').val(instansi_induk);
+        modal.find('.modal-body input[name=masa_kerja_golongan]').val(masa_kerja_golongan);
+        modal.find('.modal-body input[name=pensiun_pokok]').val(pensiun_pokok);
+    });  
 
     
 

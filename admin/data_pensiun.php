@@ -1,7 +1,7 @@
 <?php
 require 'element/header.php';
 
-$query = mysqli_query($con,"SELECT data_pegawai.*, table_pensiun.id, table_pensiun.tmt_terakhir_jabatan, table_pensiun.tanggal_pensiun, table_pensiun.kategori_pensiun, table_pensiun.admin, table_pensiun.pimpinan, spp, fc_sk_cpns_pns, fc_ktp, foto, `file_path_spp`, `file_path_sk`, `file_path_ktp`, `file_path_foto` FROM table_pensiun INNER JOIN data_pegawai ON table_pensiun.nip = data_pegawai.nip ORDER BY table_pensiun.created_at DESC");
+$query = mysqli_query($con,"SELECT data_pegawai.*, table_pensiun.id, table_pensiun.tmt_terakhir_jabatan, table_pensiun.tanggal_pensiun, table_pensiun.kategori_pensiun, table_pensiun.admin, table_pensiun.pimpinan, spp, fc_sk_cpns_pns, fc_ktp, foto, file_path_spp, file_path_sk, file_path_ktp, file_path_foto, table_pensiun.pangkat_lama, table_pensiun.pangkat_baru, table_pensiun.masa_kerja_golongan, table_pensiun.masa_kerja_pensiun, table_pensiun.berhenti_awal_bulan, table_pensiun.pensiun_tmt, table_pensiun.pensiun_pokok, table_pensiun.tmt_terakhir_jabatan, table_pensiun.tanggal_pensiun FROM table_pensiun INNER JOIN data_pegawai ON table_pensiun.nip = data_pegawai.nip ORDER BY table_pensiun.created_at DESC");
 
 // Alert hapus Ajuan
 if (isset($_SESSION['pesan'])) {
@@ -73,8 +73,7 @@ $_SESSION['pesan'] = '';
 													    <tr>
 															<td><?php echo $no; ?></td>
 															<td><?php echo $row['nip']?></td>
-															<td><?php echo $row['nama']?></td>
-														
+															<td><?php echo $row['nama']?></td>														
 															<td><?php echo $row['unit_kerja_induk']?></td>
 															<td><?php echo $row['tmt_terakhir_jabatan']?></td>
 															<td><?php echo $row['tanggal_pensiun']?></td>
@@ -109,7 +108,20 @@ $_SESSION['pesan'] = '';
                                                                         Detail
                                                                     </a>
 
-                                                                    <a class="dropdown-item cetak_sk" href="cetak_sk/cetak_sk_pensiun.php?nip=<?= $row['nip'];?>" target="blank">
+                                                                    <a class="dropdown-item cetak_sk" href="#" data-toggle="modal" data-target="#modal_print"
+                                                                    data-id="<?php echo $row['id'];?>" 
+                                                                    data-nama="<?php echo $row['nama'];?>"
+                                                                    data-nip="<?php echo $row['nip'];?>"
+                                                                    data-tanggal_lahir="<?php echo $row['tanggal_lahir'];?>"
+                                                                    data-unit_kerja="<?php echo $row['unit_kerja'];?>"
+                                                                    data-pangkat_lama="<?php echo $row['pangkat_lama'] == '' ? $row['gol_awal_cpns'] . "/" . $row['tmt_cpns'] : $row['pangkat_lama'];?>"
+                                                                    data-pangkat_baru="<?php echo $row['pangkat_baru'] == '' ? $row['gol_akhir'] . "/" . $row['tmt_gol_akhir'] : $row['pangkat_baru'];?>"
+                                                                    data-masa_kerja_golongan="<?php echo $row['masa_kerja_golongan'];?>"
+                                                                    data-masa_kerja_pensiun="<?php echo $row['masa_kerja_pensiun'];?>"
+                                                                    data-berhenti_awal_bulan="<?php echo $row['berhenti_awal_bulan'];?>"
+                                                                    data-pensiun_tmt="<?php echo $row['pensiun_tmt'];?>"
+                                                                    data-pensiun_pokok="<?php echo $row['pensiun_pokok'];?>"
+                                                                    >
                                                                         <i class="fa fa-print"></i>
                                                                         Print
                                                                     </a>
@@ -132,7 +144,7 @@ $_SESSION['pesan'] = '';
                                 </div>
 
 
-                             <!-- Modal Usul Berkala -->
+                            <!-- Modal Usul Berkala -->
                             <div id="acc_usul_berkala_modal" class="modal fade">  
                                 <div class="modal-dialog">
                                     <form method="POST"  enctype="multipart/form-data" action="fungsi/update_pensiun.php">
@@ -197,6 +209,71 @@ $_SESSION['pesan'] = '';
                                 </div>  
                             </div>                          
                         </div>
+
+
+                        <!-- Modal Usul Berkala -->
+                        <div id="modal_print" class="modal fade">  
+                            <div class="modal-dialog">
+                                <form method="POST"  enctype="multipart/form-data" action="cetak_sk/cetak_sk_pensiun.php">
+                                <div class="modal-content">   
+                                    <div class="modal-header">  
+                                        <h4 class="modal-title">Data Pensiun</h4>  
+                                    </div>  
+                                    <div class="modal-body">
+                                        <input id="id" name="id" type="hidden" />
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Nama lengkap</label>
+                                            <input type="text" name ="nama" class="form-control" placeholder="Masukkan nama lengkap.." readonly required />
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">NIP</label>
+                                            <input type="text" name ="nip" class="form-control" placeholder="Masukkan NIP.." readonly required />
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Tanggal Lahir</label>
+                                            <input type="date" name ="tanggal_lahir" class="form-control" placeholder="Masukkan tanggal lahir.." readonly required />
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Unit Kerja</label>
+                                            <input type="text" name ="unit_kerja" class="form-control" placeholder="Masukkan Unit Kerja.." readonly required />
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Pangkat/Gol.ruang Lama</label>
+                                            <input type="text" name ="pangkat_lama" class="form-control" placeholder="Masukkan Pangkat/Gol.ruang Lama.." required />
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Pangkat/Gol.ruang Baru</label>
+                                            <input type="text" name ="pangkat_baru" class="form-control" placeholder="Masukkan Pangkat/Gol.ruang Baru.." required />
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Masa Kerja Golongan</label>
+                                            <input type="text" name ="masa_kerja_golongan" class="form-control" placeholder="Masukkan Masa Kerja Golongan.." required />
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Masa Kerja Pensiun</label>
+                                            <input type="text" name ="masa_kerja_pensiun" class="form-control" placeholder="Masukkan Masa Kerja Pensiun.." required />
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Berhenti Awal Bulan</label>
+                                            <input type="text" name ="berhenti_awal_bulan" class="form-control" placeholder="Masukkan Berhenti Awal Bulan.." required />
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Pensiun TMT</label>
+                                            <input type="text" name ="pensiun_tmt" class="form-control" placeholder="Masukkan Pensiun TMT.." required />
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Pensiun Pokok</label>
+                                            <input type="text" name ="pensiun_pokok" class="form-control" placeholder="Masukkan Pensiun Pokok.." required />
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                        <button type="submit" class="btn btn-warning">Simpan</button>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>  
+                        </div>
                         <!-- [ Main Content ] end -->
                     </div>
                 </div>
@@ -246,8 +323,35 @@ $_SESSION['pesan'] = '';
         modal.find('.modal-body input[name=foto]').prop('checked',foto);
         modal.find('.modal-body select[name=proses]').val(proses);
     });
-
     
+    $('#modal_print').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget);
+        var id                  = button.data('id');
+        var nama                = button.data('nama');
+        var nip                 = button.data('nip');
+        var tanggal_lahir       = button.data('tanggal_lahir');
+        var unit_kerja          = button.data('unit_kerja');
+        var pangkat_lama        = button.data('pangkat_lama');
+        var pangkat_baru        = button.data('pangkat_baru');
+        var masa_kerja_golongan = button.data('masa_kerja_golongan');
+        var masa_kerja_pensiun  = button.data('masa_kerja_pensiun');
+        var berhenti_awal_bulan = button.data('berhenti_awal_bulan');
+        var pensiun_tmt         = button.data('pensiun_tmt');
+        var pensiun_pokok       = button.data('pensiun_pokok');
+        var modal = $(this);
+        modal.find('.modal-body input[name=id]').val(id);
+        modal.find('.modal-body input[name=nama]').val(nama);
+        modal.find('.modal-body input[name=nip]').val(nip);
+        modal.find('.modal-body input[name=tanggal_lahir]').val(tanggal_lahir);
+        modal.find('.modal-body input[name=unit_kerja]').val(unit_kerja);
+        modal.find('.modal-body input[name=pangkat_lama]').val(pangkat_lama);
+        modal.find('.modal-body input[name=pangkat_baru]').val(pangkat_baru);
+        modal.find('.modal-body input[name=masa_kerja_golongan]').val(masa_kerja_golongan);
+        modal.find('.modal-body input[name=masa_kerja_pensiun]').val(masa_kerja_pensiun);
+        modal.find('.modal-body input[name=berhenti_awal_bulan]').val(berhenti_awal_bulan);
+        modal.find('.modal-body input[name=pensiun_tmt]').val(pensiun_tmt);
+        modal.find('.modal-body input[name=pensiun_pokok]').val(pensiun_pokok);
+    });    
 
     $(document).on('click', '#delete', function(e) {
         e.preventDefault();

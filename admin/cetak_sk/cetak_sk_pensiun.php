@@ -3,15 +3,32 @@
 require ('../fpdf/fpdf.php');
 include "../../db_con/koneksi.php";
 
-if(!isset($_GET['nip'])) return;
-$nip = $_GET['nip'];
-$query = "SELECT table_pensiun.*, data_pegawai.*, DAY(data_pegawai.tanggal_lahir) hari_lahir, MONTH(data_pegawai.tanggal_lahir) bulan_lahir, YEAR(data_pegawai.tanggal_lahir) tahun_lahir FROM `table_pensiun` LEFT JOIN data_pegawai ON data_pegawai.nip = table_pensiun.nip WHERE table_pensiun.nip = '".$nip."'";
+if(!isset($_POST['nip'])) return;
+$id = htmlentities(trim( $_POST['id'] ));
+$nip = htmlentities(trim( $_POST['nip'] ));
+$nama = htmlentities(trim( $_POST['nama'] ));
+$tanggal_lahir = htmlentities(trim( $_POST['tanggal_lahir'] ));
+$unit_kerja = htmlentities(trim( $_POST['unit_kerja'] ));
+$pangkat_lama = htmlentities(trim( $_POST['pangkat_lama'] ));
+$pangkat_baru = htmlentities(trim( $_POST['pangkat_baru'] ));
+$masa_kerja_golongan = htmlentities(trim( $_POST['masa_kerja_golongan'] ));
+$masa_kerja_pensiun = htmlentities(trim( $_POST['masa_kerja_pensiun'] ));
+$berhenti_awal_bulan = htmlentities(trim( $_POST['berhenti_awal_bulan'] ));
+$pensiun_tmt = htmlentities(trim( $_POST['pensiun_tmt'] ));
+$pensiun_pokok = htmlentities(trim( $_POST['pensiun_pokok'] ));
+
+$query = "UPDATE table_pensiun SET nama='$nama',tanggal_lahir='$tanggal_lahir',unit_kerja='$unit_kerja',pangkat_lama='$pangkat_lama',pangkat_baru='$pangkat_baru',masa_kerja_golongan='$masa_kerja_golongan',masa_kerja_pensiun='$masa_kerja_pensiun',berhenti_awal_bulan='$berhenti_awal_bulan',pensiun_tmt='$pensiun_tmt',pensiun_pokok='$pensiun_pokok' WHERE id = '$id'";
+$result = mysqli_query($con, $query);
+
+
+$nip = $_POST['nip'];
+$query = "SELECT table_pensiun.*, data_pegawai.*, DAY(data_pegawai.tanggal_lahir) hari_lahir, MONTH(data_pegawai.tanggal_lahir) bulan_lahir, YEAR(data_pegawai.tanggal_lahir) tahun_lahir FROM table_pensiun LEFT JOIN data_pegawai ON data_pegawai.nip = table_pensiun.nip WHERE table_pensiun.nip = '".$nip."'";
 $result = mysqli_query($con, $query);
 $row = mysqli_fetch_array($result);
 
 // $pangkat_tujuan = preg_replace("/[^a-zA-Z0-9]+/", "", $row['golongan_pangkat_tujuan']);
 
-// $query = "SELECT * FROM `table_gajih` WHERE table_gajih.pangkat = '".$pangkat_tujuan."'";
+// $query = "SELECT * FROM table_gajih WHERE table_gajih.pangkat = '".$pangkat_tujuan."'";
 // $result = mysqli_query($con, $query);
 // $pangkat = mysqli_fetch_array($result);
 
@@ -217,43 +234,43 @@ $pdf->Ln(6);
 $pdf->MyMultiCell(10,12, '',0,0,'R', false);
 $pdf->MyMultiCell(10,12, '5.',1,0,'C', false);
 $pdf->MyMultiCell(50,6, 'PANGKAT/GOL.RUANG LAMA',1,0,'L', false);
-$pdf->MyMultiCell($width_wm-70,12, ": " . $row['gol_awal_cpns'] . "/" . $row['tmt_cpns'],1,0,'L', false);
+$pdf->MyMultiCell($width_wm-70,12, ": " . $row['pangkat_lama'] ,1,0,'L', false);
 
 $pdf->Ln(12);
 $pdf->MyMultiCell(10,12, '',0,0,'R', false);
 $pdf->MyMultiCell(10,12, '6.',1,0,'C', false);
 $pdf->MyMultiCell(50,6, 'PANGKAT/GOL.RUANG BARU',1,0,'L', false);
-$pdf->MyMultiCell($width_wm-70,12, ": " . $row['gol_akhir'] . "/" . $row['tmt_gol_akhir'],1,0,'L', false);
+$pdf->MyMultiCell($width_wm-70,12, ": " . $row['pangkat_baru'] ,1,0,'L', false);
 
 $pdf->Ln(12);
 $pdf->MyMultiCell(10,6, '',0,0,'R', false);
 $pdf->MyMultiCell(10,6, '7.',1,0,'C', false);
 $pdf->MyMultiCell(50,6, 'MASA KERJA GOLONGAN',1,0,'L', false);
-$pdf->MyMultiCell($width_wm-70,6, ": -",1,0,'L', false);
+$pdf->MyMultiCell($width_wm-70,6, ": " . $row['masa_kerja_golongan'],1,0,'L', false);
 
 $pdf->Ln(6);
 $pdf->MyMultiCell(10,6, '',0,0,'R', false);
 $pdf->MyMultiCell(10,6, '8.',1,0,'C', false);
 $pdf->MyMultiCell(50,6, 'MASA KERJA PENSIUN',1,0,'L', false);
-$pdf->MyMultiCell($width_wm-70,6, ": -",1,0,'L', false);
+$pdf->MyMultiCell($width_wm-70,6, ": " . $row['masa_kerja_pensiun'],1,0,'L', false);
 
 $pdf->Ln(6);
 $pdf->MyMultiCell(10,6, '',0,0,'R', false);
 $pdf->MyMultiCell(10,6, '9.',1,0,'C', false);
 $pdf->MyMultiCell(50,6, 'BERHENTI AKHIR BULAN',1,0,'L', false);
-$pdf->MyMultiCell($width_wm-70,6, ": -",1,0,'L', false);
+$pdf->MyMultiCell($width_wm-70,6, ": " . $row['berhenti_awal_bulan'],1,0,'L', false);
 
 $pdf->Ln(6);
 $pdf->MyMultiCell(10,6, '',0,0,'R', false);
 $pdf->MyMultiCell(10,6, '10.',1,0,'C', false);
 $pdf->MyMultiCell(50,6, 'PENSIUN TMT',1,0,'L', false);
-$pdf->MyMultiCell($width_wm-70,6, ": -",1,0,'L', false);
+$pdf->MyMultiCell($width_wm-70,6, ": " . $row['pensiun_tmt'],1,0,'L', false);
 
 $pdf->Ln(6);
 $pdf->MyMultiCell(10,6, '',0,0,'R', false);
 $pdf->MyMultiCell(10,6, '11.',1,0,'C', false);
 $pdf->MyMultiCell(50,6, 'PENSIUN POKOK',1,0,'L', false);
-$pdf->MyMultiCell($width_wm-70,6, ": -",1,0,'L', false);
+$pdf->MyMultiCell($width_wm-70,6, ": " . $row['pensiun_pokok'],1,0,'L', false);
 
 $pdf->Ln(10);
 $pdf->MyMultiCell(30,4, '',0,0,'L', false);

@@ -3,8 +3,18 @@
 require ('../fpdf/fpdf.php');
 include "../../db_con/koneksi.php";
 
-if(!isset($_GET['nip'])) return;
-$nip = $_GET['nip'];
+if(!isset($_POST['nip'])) return;
+
+$id = htmlentities(trim( $_POST['id'] ));
+$jabatan = htmlentities(trim( $_POST['jabatan'] ));
+$pendidikan = htmlentities(trim( $_POST['pendidikan'] ));
+$masa_kerja_golongan = htmlentities(trim( $_POST['masa_kerja_golongan'] ));
+$gaji_pokok = htmlentities(trim( $_POST['gaji_pokok'] ));
+
+$query = "UPDATE `table_pangkat` SET `pendidikan`='$pendidikan',`jabatan`='$jabatan',`masa_kerja_golongan`='$masa_kerja_golongan',`gaji_pokok`='$gaji_pokok' WHERE id = '$id'";
+$result = mysqli_query($con, $query);
+
+$nip = $_POST['nip'];
 $query = "SELECT table_pangkat.*, data_pegawai.*, DAY(data_pegawai.tanggal_lahir) hari_lahir, MONTH(data_pegawai.tanggal_lahir) bulan_lahir, YEAR(data_pegawai.tanggal_lahir) tahun_lahir FROM `table_pangkat` LEFT JOIN data_pegawai ON data_pegawai.nip = table_pangkat.nip WHERE table_pangkat.nip = '".$nip."'";
 $result = mysqli_query($con, $query);
 $row = mysqli_fetch_array($result);
@@ -177,7 +187,7 @@ $pdf->Ln(8);
 $pdf->MyMultiCell(10,4, '',0,0,'R', false);
 $pdf->MyMultiCell(10,4, '1.',0,0,'R', false);
 $pdf->MyMultiCell(50,4, 'Nama',0,0,'L', false);
-$pdf->MyMultiCell($width_wm-70,4, ": " . $row['gelar_depan'] . " " . $row['nama'] . " " . $row['gelar_belakang'] ,0,0,'L', false);
+$pdf->MyMultiCell($width_wm-70,4, ": " . trim($row['gelar_depan'] . " " . $row['nama'] . " " . $row['gelar_belakang']) ,0,0,'L', false);
 
 $pdf->Ln(4);
 $pdf->MyMultiCell(10,4, '',0,0,'R', false);
@@ -195,7 +205,7 @@ $pdf->Ln(4);
 $pdf->MyMultiCell(10,4, '',0,0,'R', false);
 $pdf->MyMultiCell(10,4, '4.',0,0,'R', false);
 $pdf->MyMultiCell(50,4, 'Pendidikan',0,0,'L', false);
-$pdf->MyMultiCell($width_wm-70,4, ": -",0,0,'L', false);
+$pdf->MyMultiCell($width_wm-70,4, ": " . $row['pendidikan'],0,0,'L', false);
 
 $pdf->Ln(4);
 $pdf->MyMultiCell(10,4, '',0,0,'R', false);
@@ -207,19 +217,19 @@ $pdf->Ln(8);
 $pdf->MyMultiCell(10,4, '',0,0,'R', false);
 $pdf->MyMultiCell(10,4, '6.',0,0,'R', false);
 $pdf->MyMultiCell(50,4, 'Jabatan',0,0,'L', false);
-$pdf->MyMultiCell($width_wm-70,4, ": " . $row['nama_jabatan_struktural'],0,0,'L', false);
+$pdf->MyMultiCell($width_wm-70,4, ": " . $row['jabatan'],0,0,'L', false);
 
 $pdf->Ln(4);
 $pdf->MyMultiCell(10,4, '',0,0,'R', false);
 $pdf->MyMultiCell(10,4, '7.',0,0,'R', false);
 $pdf->MyMultiCell(50,4, 'Masa Kerja Golongan',0,0,'L', false);
-$pdf->MyMultiCell($width_wm-70,4, ": -",0,0,'L', false);
+$pdf->MyMultiCell($width_wm-70,4, ": " . $row['masa_kerja_golongan'],0,0,'L', false);
 
 $pdf->Ln(4);
 $pdf->MyMultiCell(10,4, '',0,0,'R', false);
 $pdf->MyMultiCell(10,4, '8.',0,0,'R', false);
 $pdf->MyMultiCell(50,4, 'Gaji Pokok',0,0,'L', false);
-$pdf->MyMultiCell($width_wm-70,4, ": -",0,0,'L', false);
+$pdf->MyMultiCell($width_wm-70,4, ": " . $row['gaji_pokok'],0,0,'L', false);
 
 $pdf->Ln(4);
 $pdf->MyMultiCell(10,4, '',0,0,'R', false);
